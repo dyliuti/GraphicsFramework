@@ -20,7 +20,7 @@ int ResizableRectItem::type() const
 
 QRectF ResizableRectItem::boundingRect() const
 {
- return selectorFrameBounds().adjusted(-pen().width(),-pen().width(),
+ return rectBounds().adjusted(-pen().width(),-pen().width(),
                                        pen().width(),pen().width());
 }
 
@@ -37,12 +37,12 @@ void ResizableRectItem::paint(QPainter *painter,
     drawHandlesIfNecessary();
 }
 
-QRectF ResizableRectItem::selectorFrameBounds() const
+QRectF ResizableRectItem::rectBounds() const
 {
     return rect();
 }
 
-void ResizableRectItem::setSelectorFrameBounds(QRectF boundsRect)
+void ResizableRectItem::setRectBounds(QRectF boundsRect)
 {
     prepareGeometryChange();
     setRect(boundsRect);
@@ -76,10 +76,10 @@ QDataStream &operator<<(QDataStream &out, const ResizableRectItem &mRect)
 {
 
     //Frame Rect
-    qreal x = mRect.selectorFrameBounds().x();
-    qreal y = mRect.selectorFrameBounds().y();
-    qreal width = mRect.selectorFrameBounds().width();
-    qreal height = mRect.selectorFrameBounds().height();
+    qreal x = mRect.rectBounds().x();
+    qreal y = mRect.rectBounds().y();
+    qreal width = mRect.rectBounds().width();
+    qreal height = mRect.rectBounds().height();
 
     //Position
     qreal posX= mRect.scenePos().x();
@@ -131,7 +131,7 @@ QDataStream &operator>>(QDataStream &in, ResizableRectItem &mRectItem)
             penRed >> penGreen >> penBlue >>
             penStyle >> penWidth;
 
-    mRectItem.setSelectorFrameBounds(QRectF(rectX,rectY,rectWidth,rectHeight));
+    mRectItem.setRectBounds(QRectF(rectX,rectY,rectWidth,rectHeight));
     mRectItem.setBrush(QBrush(QColor(brushRed,brushGreen,brushBlue)));
 
     QPen mPen;

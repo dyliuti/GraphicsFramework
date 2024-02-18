@@ -1,28 +1,24 @@
-#ifndef HANDLEITEM_H
+﻿#ifndef HANDLEITEM_H
 #define HANDLEITEM_H
 
 #include <QGraphicsRectItem>
 
-class HandleItem : public QGraphicsRectItem
-{
+class HandleItem : public QGraphicsRectItem {
 public:
-    enum Position
-    {
+    enum Position {
         TopLeft,
-        //TopCenter,
+        // TopCenter,
         TopRight,
-        //RightCenter,
+        // RightCenter,
         BottomRight,
-       // BottomCenter,
+        // BottomCenter,
         BottomLeft,
-        //LeftCenter
+        // LeftCenter
     };
     explicit HandleItem(Position position);
 
-
-    // QGraphicsItem interface
 protected:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     Position handlePosition;

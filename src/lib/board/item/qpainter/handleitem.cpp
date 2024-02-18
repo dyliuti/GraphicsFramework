@@ -20,12 +20,12 @@ void HandleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         ResizableHandleRect * rectItem = dynamic_cast<ResizableHandleRect *>( parentItem());
         if(rectItem){
 
-            QRectF boundingFrameRect = rectItem->selectorFrameBounds();
+            QRectF boundingFrameRect = rectItem->rectBounds();
 
             boundingFrameRect.setTop(event->pos().y() + 6);
             boundingFrameRect.setLeft(event->pos().x() +6);
 
-            rectItem->setSelectorFrameBounds(boundingFrameRect.normalized());
+            rectItem->setRectBounds(boundingFrameRect.normalized());
         }
     }
         break;
@@ -35,12 +35,12 @@ void HandleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         ResizableHandleRect * rectItem = dynamic_cast<ResizableHandleRect *>( parentItem());
         if(rectItem){
 
-            QRectF boundingFrameRect = rectItem->selectorFrameBounds();
+            QRectF boundingFrameRect = rectItem->rectBounds();
 
             boundingFrameRect.setTop(event->pos().y() + 6);
             boundingFrameRect.setRight(event->pos().x() -6);
 
-            rectItem->setSelectorFrameBounds(boundingFrameRect.normalized());
+            rectItem->setRectBounds(boundingFrameRect.normalized());
 
         }
 
@@ -52,12 +52,12 @@ void HandleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         ResizableHandleRect * rectItem = dynamic_cast<ResizableHandleRect *>( parentItem());
         if(rectItem){
 
-            QRectF boundingFrameRect = rectItem->selectorFrameBounds();
+            QRectF boundingFrameRect = rectItem->rectBounds();
 
             boundingFrameRect.setRight(event->pos().x() - 6);
             boundingFrameRect.setBottom(event->pos().y() -6);
 
-            rectItem->setSelectorFrameBounds(boundingFrameRect.normalized());
+            rectItem->setRectBounds(boundingFrameRect.normalized());
 
         }
 
@@ -69,12 +69,12 @@ void HandleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         ResizableHandleRect * rectItem = dynamic_cast<ResizableHandleRect *>( parentItem());
         if(rectItem){
 
-            QRectF boundingFrameRect = rectItem->selectorFrameBounds();
+            QRectF boundingFrameRect = rectItem->rectBounds();
 
             boundingFrameRect.setBottom(event->pos().y() -6);
             boundingFrameRect.setLeft(event->pos().x() + 6);
 
-            rectItem->setSelectorFrameBounds(boundingFrameRect.normalized());
+            rectItem->setRectBounds(boundingFrameRect.normalized());
         }
 
     }

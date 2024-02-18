@@ -1,4 +1,4 @@
-#ifndef PAINTER_RESIZABLEHANDLERECT_H
+﻿#ifndef PAINTER_RESIZABLEHANDLERECT_H
 #define PAINTER_RESIZABLEHANDLERECT_H
 
 #include <QRectF>
@@ -15,8 +15,8 @@ public:
     ResizableHandleRect();
     virtual ~ ResizableHandleRect();
 
-    virtual QRectF selectorFrameBounds() const = 0;
-    virtual void setSelectorFrameBounds(QRectF boundsRect) = 0;
+    virtual QRectF rectBounds() const = 0;
+    virtual void setRectBounds(QRectF boundsRect) = 0;
 
     void drawHandlesIfNecessary();
 

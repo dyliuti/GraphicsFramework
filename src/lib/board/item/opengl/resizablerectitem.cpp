@@ -1,10 +1,10 @@
-#include "resizablerectitem.h"
-#include <QPen>
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QMimeData>
-#include <QGraphicsSceneDragDropEvent>
+﻿#include "resizablerectitem.h"
 #include <QDebug>
+#include <QGraphicsScene>
+#include <QGraphicsSceneDragDropEvent>
+#include <QMimeData>
+#include <QPainter>
+#include <QPen>
 
 using namespace Board::Opengl;
 ResizableRectItem::ResizableRectItem()
@@ -15,18 +15,17 @@ ResizableRectItem::ResizableRectItem()
 
 int ResizableRectItem::type() const
 {
-    return  Type;
+    return Type;
 }
 
 QRectF ResizableRectItem::boundingRect() const
 {
- return selectorFrameBounds().adjusted(-pen().width(),-pen().width(),
-                                       pen().width(),pen().width());
+    return rectBounds().adjusted(-pen().width(), -pen().width(), pen().width(), pen().width());
 }
 
-void ResizableRectItem::paint(QPainter *painter,
-                              const QStyleOptionGraphicsItem *option,
-                              QWidget *widget)
+void ResizableRectItem::paint(QPainter* painter,
+    const QStyleOptionGraphicsItem* option,
+    QWidget* widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -37,74 +36,65 @@ void ResizableRectItem::paint(QPainter *painter,
     drawHandlesIfNecessary();
 }
 
-QRectF ResizableRectItem::selectorFrameBounds() const
+QRectF ResizableRectItem::rectBounds() const
 {
     return rect();
 }
 
-void ResizableRectItem::setSelectorFrameBounds(QRectF boundsRect)
+void ResizableRectItem::setRectBounds(QRectF boundsRect)
 {
     prepareGeometryChange();
     setRect(boundsRect);
     update();
 }
 
-void ResizableRectItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+void ResizableRectItem::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 {
-    if(event->mimeData()->hasColor()){
+    if (event->mimeData()->hasColor()) {
         event->acceptProposedAction();
-    }else{
+    } else {
         QGraphicsRectItem::dragEnterEvent(event);
     }
 }
 
-void ResizableRectItem::dropEvent(QGraphicsSceneDragDropEvent *event)
+void ResizableRectItem::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
-    if(event->mimeData()->hasColor()){
-        setBrush(QBrush(event->mimeData()->colorData().value <QColor>())) ;
+    if (event->mimeData()->hasColor()) {
+        setBrush(QBrush(event->mimeData()->colorData().value<QColor>()));
         event->acceptProposedAction();
-    }else{
+    } else {
         QGraphicsRectItem::dropEvent(event);
     }
 }
 
-
-
-
-//Write
-QDataStream &operator<<(QDataStream &out, const ResizableRectItem &mRect)
+// Write
+QDataStream& operator<<(QDataStream& out, const ResizableRectItem& mRect)
 {
 
-    //Frame Rect
-    qreal x = mRect.selectorFrameBounds().x();
-    qreal y = mRect.selectorFrameBounds().y();
-    qreal width = mRect.selectorFrameBounds().width();
-    qreal height = mRect.selectorFrameBounds().height();
+    // Frame Rect
+    qreal x = mRect.rectBounds().x();
+    qreal y = mRect.rectBounds().y();
+    qreal width = mRect.rectBounds().width();
+    qreal height = mRect.rectBounds().height();
 
-    //Position
-    qreal posX= mRect.scenePos().x();
+    // Position
+    qreal posX = mRect.scenePos().x();
     qreal posY = mRect.scenePos().y();
 
-    //Pen and Brush
-    //Brush Color
+    // Pen and Brush
+    // Brush Color
     QColor brushColor = mRect.brush().color();
 
-    //Pen color and width
+    // Pen color and width
     QPen mPen = mRect.pen();
 
-    out << x << y << width << height << posX << posY <<
-           brushColor.red() << brushColor.green() << brushColor.blue() <<
-           mPen.color().red() << mPen.color().green() << mPen.color().blue() <<
-           static_cast<int>(mPen.style()) << mPen.width();
+    out << x << y << width << height << posX << posY << brushColor.red() << brushColor.green() << brushColor.blue() << mPen.color().red() << mPen.color().green() << mPen.color().blue() << static_cast<int>(mPen.style()) << mPen.width();
 
-    return  out;
-
-
+    return out;
 }
 
-
-//Read
-QDataStream &operator>>(QDataStream &in, ResizableRectItem &mRectItem)
+// Read
+QDataStream& operator>>(QDataStream& in, ResizableRectItem& mRectItem)
 {
 
     qreal rectX;
@@ -126,21 +116,18 @@ QDataStream &operator>>(QDataStream &in, ResizableRectItem &mRectItem)
     int penStyle;
     int penWidth;
 
-    in >> rectX >> rectY >> rectWidth >> rectHeight >> posX >> posY >>
-            brushRed >> brushGreen >> brushBlue >>
-            penRed >> penGreen >> penBlue >>
-            penStyle >> penWidth;
+    in >> rectX >> rectY >> rectWidth >> rectHeight >> posX >> posY >> brushRed >> brushGreen >> brushBlue >> penRed >> penGreen >> penBlue >> penStyle >> penWidth;
 
-    mRectItem.setSelectorFrameBounds(QRectF(rectX,rectY,rectWidth,rectHeight));
-    mRectItem.setBrush(QBrush(QColor(brushRed,brushGreen,brushBlue)));
+    mRectItem.setRectBounds(QRectF(rectX, rectY, rectWidth, rectHeight));
+    mRectItem.setBrush(QBrush(QColor(brushRed, brushGreen, brushBlue)));
 
     QPen mPen;
-    mPen.setColor(QColor(penRed,penGreen,penBlue));
+    mPen.setColor(QColor(penRed, penGreen, penBlue));
     mPen.setStyle(static_cast<Qt::PenStyle>(penStyle));
     mPen.setWidth(penWidth);
     mRectItem.setPen(mPen);
 
-    mRectItem.setPos(QPointF(posX,posY));
+    mRectItem.setPos(QPointF(posX, posY));
 
-    return  in;
+    return in;
 }

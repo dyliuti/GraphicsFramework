@@ -20,8 +20,8 @@ public:
 
     // ResizableHandleRect interface
 
-    QRectF selectorFrameBounds() const override;
-    void setSelectorFrameBounds(QRectF boundsRect) override;
+    QRectF rectBounds() const override;
+    void setRectBounds(QRectF boundsRect) override;
 
     // QGraphicsItem interface
 protected:

@@ -1,4 +1,4 @@
-#include "resizablehandlerect.h"
+﻿#include "resizablehandlerect.h"
 #include <QGraphicsScene>
 #include <QDebug>
 
@@ -30,7 +30,7 @@ void ResizableHandleRect::drawHandles()
     mPen.setColor(Qt::black);
 
     //Top left handle
-    QPointF topLeftCorner = selectorFrameBounds().topLeft() + QPointF(-12.0,-12.0);
+    QPointF topLeftCorner = rectBounds().topLeft() + QPointF(-12.0,-12.0);
     topleftHandleRect  = QRectF(topLeftCorner,QSize(12,12));
     handleList[0]->setRect(topleftHandleRect);
     if(!handleList.isEmpty() && (!handlesAddedToScene)){
@@ -41,7 +41,7 @@ void ResizableHandleRect::drawHandles()
     }
 
     //Top right
-    QPointF topRightCorner = selectorFrameBounds().topRight() + QPointF(0,-12.0);
+    QPointF topRightCorner = rectBounds().topRight() + QPointF(0,-12.0);
     topRightHandleRect  = QRectF(topRightCorner,QSize(12,12));
     handleList[1]->setRect(topRightHandleRect);
     if(!handleList.isEmpty() && (!handlesAddedToScene)){
@@ -52,7 +52,7 @@ void ResizableHandleRect::drawHandles()
     }
 
     //Bottom right
-    QPointF bottomRightCorner = selectorFrameBounds().bottomRight() + QPointF(0,0);
+    QPointF bottomRightCorner = rectBounds().bottomRight() + QPointF(0,0);
     bottomRightHandleRect  = QRectF(bottomRightCorner,QSize(12,12));
     handleList[2]->setRect(bottomRightHandleRect);
     if(!handleList.isEmpty() && (!handlesAddedToScene)){
@@ -63,7 +63,7 @@ void ResizableHandleRect::drawHandles()
     }
 
     //Bottom left
-    QPointF bottomLeftCorner = selectorFrameBounds().bottomLeft() + QPointF(-12,0);
+    QPointF bottomLeftCorner = rectBounds().bottomLeft() + QPointF(-12,0);
     bottomLeftHandleRect  = QRectF(bottomLeftCorner,QSize(12,12));
     handleList[3]->setRect(bottomLeftHandleRect);
     if(!handleList.isEmpty() && (!handlesAddedToScene)){
@@ -88,8 +88,6 @@ void ResizableHandleRect::drawHandlesIfNecessary()
                       handle. Please call setOwnerItem on your ResizableHandleRect subclass";
                       return;
     }
-
-
 
     if(ownerItem->isSelected()){
         drawHandles();
