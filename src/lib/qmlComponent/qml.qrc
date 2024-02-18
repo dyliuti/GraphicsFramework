@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>qml/com/ComButton.qml</file>
+        <file>qml/com/ComImage.qml</file>
+        <file>qml/com/ComText.qml</file>
+        <file>qml/js/Config.js</file>
+        <file>qml/js/Style.js</file>
+    </qresource>
+</RCC>
