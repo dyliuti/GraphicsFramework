@@ -10,6 +10,7 @@
 #include <set>
 
 BOARD_NAMESPACE_BEGIN
+class Scene;
 enum class StateType {
     Undefined = -1,
     Normal = 0, // 仅是鼠标移动，不做选择也不做绘制
@@ -29,7 +30,7 @@ enum class ToolType {
 class StateCommonData {
 public:
     QPointF pressPos;
-    //    Scene* scene {};
+    Scene* scene = nullptr;
 };
 
 static int s_sceneWidth = 1600;

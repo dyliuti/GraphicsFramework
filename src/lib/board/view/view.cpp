@@ -16,7 +16,7 @@ void View::mousePressEvent(QMouseEvent* event)
     auto scenePos = mapToScene(event->pos());
     auto commonData = stateMachine->getCommonData();
     commonData->pressPos = scenePos;
-    //    commonData->scene = scene;
+    commonData->scene = scene;
     if (scene && m_toolType == ToolType::Select) {
         auto item = scene->itemAt(scenePos, transform());
         auto state = stateMachine->switchState(StateType::BoxSelect);
