@@ -19,7 +19,7 @@ void View::mousePressEvent(QMouseEvent* event)
     commonData->scene = scene;
     if (scene && m_toolType == ToolType::Select) {
         auto item = scene->itemAt(scenePos, transform());
-        auto state = stateMachine->switchState(StateType::BoxSelect);
+        auto state = stateMachine->switchState(item ? StateType::SingleSelect : StateType::BoxSelect);
     }
 
     QGraphicsView::mousePressEvent(event);

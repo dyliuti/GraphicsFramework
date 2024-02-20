@@ -21,7 +21,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-    Board::Scene* getScene();
+    Scene* getScene();
 
 private:
     ToolType m_toolType { ToolType::Cursor };
