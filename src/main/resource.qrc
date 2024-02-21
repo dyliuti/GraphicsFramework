@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/edit/close.png</file>
+        <file>resource/edit/copyIcon.png</file>
+        <file>resource/edit/cutIcon.png</file>
+        <file>resource/edit/open.png</file>
+        <file>resource/edit/pasteIcon.png</file>
+        <file>resource/edit/save.png</file>
+        <file>resource/graph/circle.png</file>
+        <file>resource/graph/circle_active.png</file>
+        <file>resource/graph/circle_cursor.png</file>
+        <file>resource/graph/cursor.png</file>
+        <file>resource/graph/cursor_active.png</file>
+        <file>resource/graph/ellipse.png</file>
+        <file>resource/graph/eraser.png</file>
+        <file>resource/graph/eraser_active.png</file>
+        <file>resource/graph/eraser_cursor.png</file>
+        <file>resource/graph/pen.png</file>
+        <file>resource/graph/pen_active.png</file>
+        <file>resource/graph/pen_cursor.png</file>
+        <file>resource/graph/pen_cursor1.png</file>
+        <file>resource/graph/pen_style_dashed.png</file>
+        <file>resource/graph/pen_style_dot_dashed.png</file>
+        <file>resource/graph/pen_style_dotted.png</file>
+        <file>resource/graph/pen_style_solid.png</file>
+        <file>resource/graph/rectangle.png</file>
+        <file>resource/graph/rectangle_cursor.png</file>
+        <file>resource/graph/rectangle1.png</file>
+        <file>resource/graph/rectangle1_active.png</file>
+        <file>resource/graph/redoIcon.png</file>
+        <file>resource/graph/star.png</file>
+        <file>resource/graph/star_active.png</file>
+        <file>resource/graph/star_cursor.png</file>
+        <file>resource/graph/undoIcon.png</file>
+    </qresource>
+</RCC>

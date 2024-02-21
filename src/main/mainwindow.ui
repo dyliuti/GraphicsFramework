@@ -14,9 +14,199 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actioncopy"/>
+    <addaction name="actionpaster"/>
+   </widget>
+   <widget class="QMenu" name="menuGraph">
+    <property name="title">
+     <string>Graph</string>
+    </property>
+    <addaction name="actionCursor"/>
+    <addaction name="actionPen"/>
+    <addaction name="actionRect"/>
+    <addaction name="actionCircle"/>
+    <addaction name="actionEllipse"/>
+    <addaction name="actionStar"/>
+    <addaction name="actionEraser"/>
+   </widget>
+   <widget class="QMenu" name="menuHistory">
+    <property name="title">
+     <string>History</string>
+    </property>
+    <addaction name="actionundo"/>
+    <addaction name="actionredo"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuGraph"/>
+   <addaction name="menuHistory"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="actioncopy"/>
+   <addaction name="actionpaster"/>
+   <addaction name="actionCursor"/>
+   <addaction name="actionPen"/>
+   <addaction name="actionRect"/>
+   <addaction name="actionCircle"/>
+   <addaction name="actionEllipse"/>
+   <addaction name="actionStar"/>
+   <addaction name="actionEraser"/>
+   <addaction name="actionredo"/>
+   <addaction name="actionundo"/>
+  </widget>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/edit/open.png</normaloff>:/resource/edit/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/edit/save.png</normaloff>:/resource/edit/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actioncopy">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/edit/copyIcon.png</normaloff>:/resource/edit/copyIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>copy</string>
+   </property>
+  </action>
+  <action name="actionpaster">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/edit/pasteIcon.png</normaloff>:/resource/edit/pasteIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>paste</string>
+   </property>
+  </action>
+  <action name="actionCursor">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/cursor.png</normaloff>:/resource/graph/cursor.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cursor</string>
+   </property>
+  </action>
+  <action name="actionPen">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/pen.png</normaloff>:/resource/graph/pen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pen</string>
+   </property>
+  </action>
+  <action name="actionRect">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/rectangle1.png</normaloff>:/resource/graph/rectangle1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rect</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/circle.png</normaloff>:/resource/graph/circle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circle</string>
+   </property>
+  </action>
+  <action name="actionEllipse">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/ellipse.png</normaloff>:/resource/graph/ellipse.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ellipse</string>
+   </property>
+  </action>
+  <action name="actionStar">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/star.png</normaloff>:/resource/graph/star.png</iconset>
+   </property>
+   <property name="text">
+    <string>Star</string>
+   </property>
+  </action>
+  <action name="actionEraser">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/eraser.png</normaloff>:/resource/graph/eraser.png</iconset>
+   </property>
+   <property name="text">
+    <string>Eraser</string>
+   </property>
+  </action>
+  <action name="actionundo">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/undoIcon.png</normaloff>:/resource/graph/undoIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>redo</string>
+   </property>
+  </action>
+  <action name="actionredo">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/graph/redoIcon.png</normaloff>:/resource/graph/redoIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>undo</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

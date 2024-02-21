@@ -22,6 +22,9 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_actionOpen_triggered(bool checked);
+
 private:
     Ui::MainWindow* ui;
     std::shared_ptr<Board::View> m_view;

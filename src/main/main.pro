@@ -15,6 +15,9 @@ win32 {
     FORMS += $$system(for /r $$PWD %i in (*.ui) do @echo %i)
 }
 
+RESOURCES += \
+    resource.qrc
+
 include(../../framework.pri)
 include(../module.pri)
 
