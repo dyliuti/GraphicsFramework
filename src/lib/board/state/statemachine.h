@@ -3,16 +3,16 @@
 //
 #ifndef BOARD_STATEMACHINE_H
 #define BOARD_STATEMACHINE_H
+#include "board_global.h"
 #include "boarddefine.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QMap>
 
 BOARD_NAMESPACE_BEGIN
-
 class StateBase;
 class StateCommonData;
 enum class StateType;
-class StateMachine {
+class BOARD_EXPORT StateMachine {
 public:
     StateMachine();
 
@@ -20,7 +20,7 @@ public:
     StateType getCurStateType();
     std::shared_ptr<StateBase> switchState(StateType type);
     void registState(StateType type, std::shared_ptr<StateBase> state);
-
+    bool isCureentSelectType();
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);

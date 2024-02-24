@@ -17,10 +17,6 @@ void View::mousePressEvent(QMouseEvent* event)
     auto commonData = stateMachine->getCommonData();
     commonData->pressPos = scenePos;
     commonData->scene = scene;
-    if (scene && m_toolType == ToolType::Select) {
-        auto item = scene->itemAt(scenePos, transform());
-        auto state = stateMachine->switchState(item ? StateType::SingleSelect : StateType::BoxSelect);
-    }
 
     QGraphicsView::mousePressEvent(event);
 }

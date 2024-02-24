@@ -148,7 +148,10 @@ void CommandCtrl::undoDeleteCommand()
 {
     if (m_deleteCommand != nullptr) {
         auto redoCommand = std::dynamic_pointer_cast<GroupCommand>(m_redoCommandVector.takeLast());
-        assert(redoCommand != nullptr);
+        if (redoCommand == nullptr) {
+            assert(redoCommand != nullptr);
+            return;
+        }
         redoCommand->eraseCommand(0);
         m_redoCommandVector.append(redoCommand);
         m_deleteCommand->redo();

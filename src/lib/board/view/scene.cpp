@@ -34,11 +34,6 @@ Scene::Scene(QObject* parent)
     undoStack = new QUndoStack(this);
 }
 
-StateType Scene::getCurStateType()
-{
-    return m_stateMachine->getCurStateType();
-}
-
 void Scene::initStateMachine()
 {
     m_stateMachine = std::make_unique<StateMachine>();

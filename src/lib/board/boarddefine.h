@@ -12,21 +12,20 @@
 
 BOARD_NAMESPACE_BEGIN
 class Scene;
-enum class StateType {
+enum class BOARD_EXPORT StateType {
     Undefined = -1,
     Normal = 0, // 仅是鼠标移动，不做选择也不做绘制
+    Select,
     BoxSelect,
     SingleSelect,
     Pen, //  粉笔
     Eraser, // 橡皮擦
+    Rect,
+    Star,
+    Cirle,
+    Ellipse,
 };
 static std::set<StateType> s_editTypeSet { StateType::Pen, StateType::Eraser };
-
-enum class ToolType {
-    Cursor, // 仅是鼠标移动
-    Select,
-    Pen,
-};
 
 class StateCommonData {
 public:

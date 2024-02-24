@@ -17,7 +17,6 @@ class BOARD_EXPORT Scene : public QGraphicsScene {
     Q_OBJECT
 public:
     explicit Scene(QObject* parent = nullptr);
-    StateType getCurStateType();
     // stateMachine属于scene但注册状态应该由view层定义
     const std::unique_ptr<StateMachine>& getStateMachine() { return m_stateMachine; }
 

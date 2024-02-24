@@ -49,3 +49,9 @@ void StateMachine::registState(StateType type, std::shared_ptr<StateBase> state)
 
     m_stateMap[type] = state;
 }
+
+bool StateMachine::isCureentSelectType()
+{
+    auto type = m_curState ? m_curState->getStateType() : StateType::Undefined;
+    return type == StateType::Select || type == StateType::SingleSelect || type == StateType::BoxSelect;
+}

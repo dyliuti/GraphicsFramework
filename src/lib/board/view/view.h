@@ -13,7 +13,6 @@ class Scene;
 class BOARD_EXPORT View : public QGraphicsView {
 public:
     explicit View(QWidget* parent = nullptr);
-    void setToolType(ToolType type) { m_toolType = type; }
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -22,9 +21,6 @@ protected:
 
 private:
     Scene* getScene();
-
-private:
-    ToolType m_toolType { ToolType::Cursor };
 };
 BOARD_NAMESPACE_END
 

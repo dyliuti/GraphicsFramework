@@ -25,8 +25,8 @@ protected:
     void undoDeleteCommand();
 
 protected:
-    QVector<std::shared_ptr<IUndoRedoCommand>> m_undoCommandVector;
-    QVector<std::shared_ptr<IUndoRedoCommand>> m_redoCommandVector;
+    QList<std::shared_ptr<IUndoRedoCommand>> m_undoCommandVector;
+    QList<std::shared_ptr<IUndoRedoCommand>> m_redoCommandVector;
     std::shared_ptr<IUndoRedoCommand> m_deleteCommand;
 };
 BOARD_NAMESPACE_END

@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -81,7 +81,6 @@
    <addaction name="actionPen"/>
    <addaction name="actionRect"/>
    <addaction name="actionCircle"/>
-   <addaction name="actionEllipse"/>
    <addaction name="actionStar"/>
    <addaction name="actionEraser"/>
    <addaction name="actionredo"/>
@@ -97,6 +96,12 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="resource.qrc">
      <normaloff>:/resource/edit/save.png</normaloff>:/resource/edit/save.png</iconset>
