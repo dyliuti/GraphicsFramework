@@ -5,23 +5,15 @@
 BOARD_NAMESPACE_USE
 static QGraphicsItemGroup* s_lineGroup = nullptr;
 
-void PenState::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    qInfo() << "111111: " << __FUNCTION__;
-}
-
 void PenState::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-
     if (!s_lineGroup) {
         s_lineGroup = new QGraphicsItemGroup();
         s_lineGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 
-        m_lastPoint = m_commonData->pressStartPos;
-
-        m_commonData->scene->addItem(s_lineGroup);
+        m_scene->addItem(s_lineGroup);
     }
-
+    qInfo() << "111111: " << __FUNCTION__ << m_lastPoint << event->scenePos();
     const auto& endPoint = event->scenePos();
     auto partLine = new QGraphicsLineItem(QLineF(m_lastPoint, endPoint));
     QPen pen;
@@ -31,7 +23,6 @@ void PenState::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     s_lineGroup->addToGroup(partLine);
 
     m_lastPoint = endPoint;
-    qInfo() << "111111: " << __FUNCTION__;
 }
 
 void PenState::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)

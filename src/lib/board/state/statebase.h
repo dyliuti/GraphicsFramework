@@ -15,7 +15,7 @@ public:
     typedef std::shared_ptr<StateBase> ptr;
     virtual ~StateBase() = default;
 
-    void setCommonData(std::shared_ptr<StateCommonData> data) { m_commonData = data; }
+    void setScene(Scene* scene) { m_scene = scene; };
     void setStateType(StateType type);
     StateType getStateType() const;
     void setSwitchFunc(std::function<std::shared_ptr<StateBase>(StateType)> func);
@@ -37,7 +37,7 @@ protected:
 protected:
     StateType m_type;
     std::function<std::shared_ptr<StateBase>(StateType)> m_switchFunc;
-    std::shared_ptr<StateCommonData> m_commonData;
+    Scene* m_scene = nullptr;
 };
 BOARD_NAMESPACE_END
 #endif // BOARD_STATEBASE_H

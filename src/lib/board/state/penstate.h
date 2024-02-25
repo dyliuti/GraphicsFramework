@@ -10,12 +10,8 @@ class PenState : public DrawState {
 public:
     using DrawState::DrawState;
 
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-
-protected:
-    QPointF m_lastPoint;
 };
 BOARD_NAMESPACE_END
 #endif // BOARD_PENSTATE_H

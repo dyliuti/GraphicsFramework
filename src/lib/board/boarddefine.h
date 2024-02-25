@@ -30,7 +30,6 @@ static std::set<StateType> s_editTypeSet { StateType::Pen, StateType::Eraser };
 class StateCommonData {
 public:
     QPointF pressStartPos;
-    Scene* scene = nullptr;
 };
 
 static int s_sceneWidth = 1600;

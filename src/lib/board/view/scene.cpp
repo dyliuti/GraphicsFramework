@@ -37,7 +37,7 @@ Scene::Scene(QObject* parent)
 
 void Scene::initStateMachine()
 {
-    m_stateMachine = std::make_unique<StateMachine>();
+    m_stateMachine = std::make_unique<StateMachine>(this);
     m_stateMachine->registState(StateType::Normal, std::make_shared<NormalState>());
     m_stateMachine->registState(StateType::Pen, std::make_shared<PenState>());
     m_stateMachine->registState(StateType::Select, std::make_shared<SelectState>());
@@ -148,10 +148,9 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent* event)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    m_stateMachine->getCommonData()->pressStartPos = event->scenePos();
     if (event->button() == Qt::LeftButton) {
-        auto stateType = m_stateMachine->getCurStateType();
-        m_stateMachine->switchState(stateType); // 非Select
+        qInfo() << "111111: " << __FUNCTION__ << event->scenePos();
+        m_stateMachine->mousePressEvent(event);
         return;
     }
 

@@ -5,18 +5,21 @@
 #define BOARD_STATEMACHINE_H
 #include "board_global.h"
 #include "boarddefine.h"
+
 #include <QGraphicsSceneMouseEvent>
 #include <QMap>
 
 BOARD_NAMESPACE_BEGIN
 class StateBase;
 class StateCommonData;
+class Scene;
 enum class StateType;
 class BOARD_EXPORT StateMachine {
 public:
-    StateMachine();
+    StateMachine(Scene* scene);
 
     std::shared_ptr<StateCommonData> getCommonData() { return m_commonData; }
+    std::shared_ptr<StateBase> getCurState() { return m_curState; }
     StateType getCurStateType();
     std::shared_ptr<StateBase> switchState(StateType type);
     void registState(StateType type, std::shared_ptr<StateBase> state);
@@ -29,6 +32,7 @@ protected:
     std::shared_ptr<StateBase> m_curState;
     std::shared_ptr<StateCommonData> m_commonData;
     QMap<StateType, std::shared_ptr<StateBase>> m_stateMap;
+    Scene* m_scene = nullptr;
 };
 BOARD_NAMESPACE_END
 #endif // BOARD_STATEMACHINE_H

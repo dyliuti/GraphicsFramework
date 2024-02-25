@@ -1,7 +1,8 @@
 ﻿#include "drawstate.h"
+#include <QDebug>
 
 BOARD_NAMESPACE_USE
-void DrawState::setItem(std::shared_ptr<QGraphicsItem> item)
+void DrawState::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    m_item = item;
+    m_lastPoint = event->scenePos();
 }

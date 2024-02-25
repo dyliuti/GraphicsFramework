@@ -1,9 +1,11 @@
 ﻿#include "statemachine.h"
 #include "statebase.h"
+#include "view/scene.h"
 
 BOARD_NAMESPACE_USE
-StateMachine::StateMachine()
+StateMachine::StateMachine(Scene* scene)
     : m_commonData(std::make_shared<StateCommonData>())
+    , m_scene(scene)
 {
 }
 
@@ -44,7 +46,7 @@ void StateMachine::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void StateMachine::registState(StateType type, std::shared_ptr<StateBase> state)
 {
     state->setStateType(type);
-    state->setCommonData(m_commonData);
+    state->setScene(m_scene);
     state->setSwitchFunc(std::bind(&StateMachine::switchState, this, std::placeholders::_1));
 
     m_stateMap[type] = state;

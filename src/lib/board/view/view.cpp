@@ -1,6 +1,8 @@
 ﻿#include "view.h"
 #include "scene.h"
+#include "state/selectstate.h"
 #include "state/statebase.h"
+#include <QDebug>
 #include <QMouseEvent>
 
 BOARD_NAMESPACE_USE
@@ -13,10 +15,17 @@ void View::mousePressEvent(QMouseEvent* event)
 {
     auto scene = getScene();
     const auto& stateMachine = scene->getStateMachine();
-    auto scenePos = mapToScene(event->pos());
-    auto commonData = stateMachine->getCommonData();
-    commonData->pressStartPos = scenePos;
-    commonData->scene = scene;
+    if (stateMachine->isCureentSelectType() && event->button() == Qt::LeftButton) {
+        auto item = scene->itemAt(mapToScene(event->pos()), transform());
+        qInfo() << "111111: " << __FUNCTION__ << (item ? (int)StateType::SingleSelect : (int)StateType::BoxSelect);
+        stateMachine->switchState(item ? StateType::SingleSelect : StateType::BoxSelect);
+        if (item) {
+            auto state = std::dynamic_pointer_cast<SingleSelectState>(stateMachine->getCurState());
+            if (state) {
+                state->setSelectItem(item);
+            }
+        }
+    }
 
     QGraphicsView::mousePressEvent(event);
 }
