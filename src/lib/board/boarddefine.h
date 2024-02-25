@@ -29,7 +29,7 @@ static std::set<StateType> s_editTypeSet { StateType::Pen, StateType::Eraser };
 
 class StateCommonData {
 public:
-    QPointF pressPos;
+    QPointF pressStartPos;
     Scene* scene = nullptr;
 };
 

@@ -1,6 +1,7 @@
 ﻿#include "scene.h"
 #include "state/normalstate.h"
 #include "state/penstate.h"
+#include "state/selectstate.h"
 #include "state/statemachine.h"
 #include <QApplication>
 #include <QClipboard>
@@ -39,6 +40,13 @@ void Scene::initStateMachine()
     m_stateMachine = std::make_unique<StateMachine>();
     m_stateMachine->registState(StateType::Normal, std::make_shared<NormalState>());
     m_stateMachine->registState(StateType::Pen, std::make_shared<PenState>());
+    m_stateMachine->registState(StateType::Select, std::make_shared<SelectState>());
+    m_stateMachine->registState(StateType::SingleSelect, std::make_shared<SingleSelectState>());
+    m_stateMachine->registState(StateType::BoxSelect, std::make_shared<BoxSelectState>());
+    m_stateMachine->registState(StateType::Eraser, std::make_shared<PenState>());
+    m_stateMachine->registState(StateType::Rect, std::make_shared<PenState>());
+    m_stateMachine->registState(StateType::Cirle, std::make_shared<PenState>());
+    m_stateMachine->registState(StateType::Star, std::make_shared<PenState>());
 
     m_stateMachine->switchState(StateType::Normal);
 }
@@ -140,7 +148,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent* event)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    m_stateMachine->getCommonData()->pressPos = event->scenePos();
+    m_stateMachine->getCommonData()->pressStartPos = event->scenePos();
     if (event->button() == Qt::LeftButton) {
         auto stateType = m_stateMachine->getCurStateType();
         m_stateMachine->switchState(stateType); // 非Select
@@ -163,7 +171,8 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    if ((event->buttons() & Qt::LeftButton)) {
+    qInfo() << "111111: " << __FUNCTION__ << event->button() << Qt::LeftButton;
+    if ((event->button() == Qt::LeftButton)) {
         m_stateMachine->mouseReleaseEvent(event);
         return;
     }

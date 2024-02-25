@@ -63,8 +63,8 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
 
-private:
-    void initStateMachine();
+protected:
+    virtual void initStateMachine();
 
 private:
     std::unique_ptr<StateMachine> m_stateMachine;

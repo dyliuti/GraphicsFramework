@@ -15,7 +15,7 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 protected:
-    int m_pressX;
+    QPointF m_lastPoint;
 };
 BOARD_NAMESPACE_END
 #endif // BOARD_PENSTATE_H

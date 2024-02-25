@@ -15,7 +15,7 @@ void View::mousePressEvent(QMouseEvent* event)
     const auto& stateMachine = scene->getStateMachine();
     auto scenePos = mapToScene(event->pos());
     auto commonData = stateMachine->getCommonData();
-    commonData->pressPos = scenePos;
+    commonData->pressStartPos = scenePos;
     commonData->scene = scene;
 
     QGraphicsView::mousePressEvent(event);
