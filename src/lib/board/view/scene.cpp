@@ -41,12 +41,12 @@ void Scene::initStateMachine()
     m_stateMachine->registState(StateType::Normal, std::make_shared<NormalState>());
     m_stateMachine->registState(StateType::Pen, std::make_shared<PenState>());
     m_stateMachine->registState(StateType::Select, std::make_shared<SelectState>());
-    m_stateMachine->registState(StateType::SingleSelect, std::make_shared<SingleSelectState>());
+    //    m_stateMachine->registState(StateType::SingleSelect, std::make_shared<SingleSelectState>());
     m_stateMachine->registState(StateType::BoxSelect, std::make_shared<BoxSelectState>());
-    m_stateMachine->registState(StateType::Eraser, std::make_shared<PenState>());
-    m_stateMachine->registState(StateType::Rect, std::make_shared<PenState>());
-    m_stateMachine->registState(StateType::Cirle, std::make_shared<PenState>());
-    m_stateMachine->registState(StateType::Star, std::make_shared<PenState>());
+    m_stateMachine->registState(StateType::Eraser, std::make_shared<StateBase>());
+    m_stateMachine->registState(StateType::Rect, std::make_shared<StateBase>());
+    m_stateMachine->registState(StateType::Cirle, std::make_shared<StateBase>());
+    m_stateMachine->registState(StateType::Star, std::make_shared<StateBase>());
 
     m_stateMachine->switchState(StateType::Normal);
 }
@@ -63,9 +63,7 @@ void Scene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
 void Scene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
     if (event->mimeData()->property("Key").canConvert(QMetaType::Int)) {
-
         int key = event->mimeData()->property("Key").toInt();
-
         QPen mPen;
         mPen.setColor(penColor);
         mPen.setWidth(penWidth);
@@ -148,10 +146,14 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent* event)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+    auto item = mouseGrabberItem();
+    if (item) {
+        qInfo() << "11111122: " << __FUNCTION__ << item->scenePos();
+    }
     if (event->button() == Qt::LeftButton) {
         qInfo() << "111111: " << __FUNCTION__ << event->scenePos();
         m_stateMachine->mousePressEvent(event);
-        return;
+        //        return;
     }
 
     // 除了绘制状态，其余都传递点击事件
@@ -160,9 +162,13 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+    auto item = mouseGrabberItem(); // 只在move时生效
+    if (item) {
+        qInfo() << "11111100: " << __FUNCTION__ << item->scenePos();
+    }
     if ((event->buttons() & Qt::LeftButton)) {
         m_stateMachine->mouseMoveEvent(event);
-        return;
+        //        return;
     }
 
     QGraphicsScene::mouseMoveEvent(event);
@@ -173,7 +179,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     qInfo() << "111111: " << __FUNCTION__ << event->button() << Qt::LeftButton;
     if ((event->button() == Qt::LeftButton)) {
         m_stateMachine->mouseReleaseEvent(event);
-        return;
+        //        return;
     }
 
     QGraphicsScene::mouseReleaseEvent(event);

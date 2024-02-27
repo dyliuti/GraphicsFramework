@@ -50,7 +50,8 @@ public:
 signals:
 
 public slots:
-
+    // view1 view2
+    // scene
     // QGraphicsScene interface
 protected:
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;

@@ -6,23 +6,16 @@
 #include "drawstate.h"
 
 BOARD_NAMESPACE_BEGIN
+/*** select
+ * 1. press到item -> select state（选中个数不会变）   :  box select state（选中个数清空）
+ * 2. box select state 时设置选中区域，然后回1 press判断
+ * 3. select state可能是单元移动可能是多选移动，移就行了
+ ***/
 class SelectState : public DrawState {
 public:
     using DrawState::DrawState;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-};
-
-class SingleSelectState : public DrawState {
-
-public:
-    using DrawState::DrawState;
-    void setSelectItem(QGraphicsItem* item) { m_selectItem = item; }
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-
-private:
-    QGraphicsItem* m_selectItem = nullptr;
 };
 
 class BoxSelectState : public DrawState {

@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget* parent)
     m_view->setRenderHint(QPainter::Antialiasing);
     m_scene = std::make_shared<Scene>(this);
     m_view->setScene(m_scene.get());
-
     setCentralWidget(m_view.get());
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::onActionOpenTriggered);

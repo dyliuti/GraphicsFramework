@@ -13,6 +13,7 @@ BOARD_NAMESPACE_BEGIN
 class StateBase;
 class StateCommonData;
 class Scene;
+class View;
 enum class StateType;
 class BOARD_EXPORT StateMachine {
 public:
@@ -32,6 +33,7 @@ protected:
     std::shared_ptr<StateBase> m_curState;
     std::shared_ptr<StateCommonData> m_commonData;
     QMap<StateType, std::shared_ptr<StateBase>> m_stateMap;
+    View* m_view = nullptr;
     Scene* m_scene = nullptr;
 };
 BOARD_NAMESPACE_END

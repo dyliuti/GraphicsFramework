@@ -1,7 +1,7 @@
 ﻿#include "statemachine.h"
 #include "statebase.h"
 #include "view/scene.h"
-
+#include <QDebug>
 BOARD_NAMESPACE_USE
 StateMachine::StateMachine(Scene* scene)
     : m_commonData(std::make_shared<StateCommonData>())
@@ -25,6 +25,7 @@ std::shared_ptr<StateBase> StateMachine::switchState(StateType type)
     }
 
     m_curState = it.value();
+    qInfo() << "state type: " << (int)type;
     return m_curState;
 }
 
@@ -55,5 +56,5 @@ void StateMachine::registState(StateType type, std::shared_ptr<StateBase> state)
 bool StateMachine::isCureentSelectType()
 {
     auto type = m_curState ? m_curState->getStateType() : StateType::Undefined;
-    return type == StateType::Select || type == StateType::SingleSelect || type == StateType::BoxSelect;
+    return type == StateType::Select || type == StateType::BoxSelect;
 }

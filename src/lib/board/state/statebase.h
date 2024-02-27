@@ -16,6 +16,7 @@ public:
     virtual ~StateBase() = default;
 
     void setScene(Scene* scene) { m_scene = scene; };
+    void setView(View* view) { m_view = view; };
     void setStateType(StateType type);
     StateType getStateType() const;
     void setSwitchFunc(std::function<std::shared_ptr<StateBase>(StateType)> func);
@@ -38,6 +39,7 @@ protected:
     StateType m_type;
     std::function<std::shared_ptr<StateBase>(StateType)> m_switchFunc;
     Scene* m_scene = nullptr;
+    View* m_view = nullptr;
 };
 BOARD_NAMESPACE_END
 #endif // BOARD_STATEBASE_H

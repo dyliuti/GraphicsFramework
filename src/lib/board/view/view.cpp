@@ -1,7 +1,10 @@
 ﻿#include "view.h"
 #include "scene.h"
+#include "state/normalstate.h"
+#include "state/penstate.h"
 #include "state/selectstate.h"
 #include "state/statebase.h"
+#include "state/statemachine.h"
 #include <QDebug>
 #include <QMouseEvent>
 
@@ -17,14 +20,7 @@ void View::mousePressEvent(QMouseEvent* event)
     const auto& stateMachine = scene->getStateMachine();
     if (stateMachine->isCureentSelectType() && event->button() == Qt::LeftButton) {
         auto item = scene->itemAt(mapToScene(event->pos()), transform());
-        qInfo() << "111111: " << __FUNCTION__ << (item ? (int)StateType::SingleSelect : (int)StateType::BoxSelect);
-        stateMachine->switchState(item ? StateType::SingleSelect : StateType::BoxSelect);
-        if (item) {
-            auto state = std::dynamic_pointer_cast<SingleSelectState>(stateMachine->getCurState());
-            if (state) {
-                state->setSelectItem(item);
-            }
-        }
+        stateMachine->switchState(item ? StateType::Select : StateType::BoxSelect);
     }
 
     QGraphicsView::mousePressEvent(event);

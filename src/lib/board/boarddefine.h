@@ -17,7 +17,6 @@ enum class BOARD_EXPORT StateType {
     Normal = 0, // 仅是鼠标移动，不做选择也不做绘制
     Select,
     BoxSelect,
-    SingleSelect,
     Pen, //  粉笔
     Eraser, // 橡皮擦
     Rect,
