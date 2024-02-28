@@ -4,7 +4,6 @@
 
 BOARD_NAMESPACE_USE
 static QGraphicsItemGroup* s_lineGroup = nullptr;
-
 void PenState::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (!s_lineGroup) {

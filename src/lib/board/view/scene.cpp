@@ -10,6 +10,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QMimeData>
+#include "state/shapestate.h"
 
 const QString MimeType = "application/com.blikoontech.painterapp";
 
@@ -44,8 +45,8 @@ void Scene::initStateMachine()
     //    m_stateMachine->registState(StateType::SingleSelect, std::make_shared<SingleSelectState>());
     m_stateMachine->registState(StateType::BoxSelect, std::make_shared<BoxSelectState>());
     m_stateMachine->registState(StateType::Eraser, std::make_shared<StateBase>());
-    m_stateMachine->registState(StateType::Rect, std::make_shared<StateBase>());
-    m_stateMachine->registState(StateType::Cirle, std::make_shared<StateBase>());
+    m_stateMachine->registState(StateType::Rect, std::make_shared<RectangleState>());
+    m_stateMachine->registState(StateType::Cirle, std::make_shared<CircleState>());
     m_stateMachine->registState(StateType::Star, std::make_shared<StateBase>());
 
     m_stateMachine->switchState(StateType::Normal);

@@ -2,7 +2,7 @@
 #define OPENGL_RESIZABLERECTITEM_H
 
 #include "board_global.h"
-#include "itemtypes.h"
+#include "boarddefine.h"
 #include "resizablehandlerect.h"
 #include <QGraphicsRectItem>
 
