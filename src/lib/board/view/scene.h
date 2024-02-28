@@ -71,20 +71,6 @@ private:
     std::unique_ptr<StateMachine> m_stateMachine;
 
 private:
-    void drawLineTo(const QPointF& endPoint);
-    void drawEraserAt(const QPointF& endPoint);
-    void eraseStrokesUnder(QGraphicsEllipseItem* item);
-    void drawShapeTo(const QPointF& endPoint);
-
-    void readItemsFromDataStream(QDataStream& in, bool copyPaste = true);
-    void writeItemsToDataStream(QDataStream& out, const QList<QGraphicsItem*>& items);
-
-    //    StrokeItem * lineGroup;
-    QPointF startingPoint;
-    QPointF lastPenPoint;
-    QGraphicsEllipseItem* lastEraserCircle;
-    QGraphicsItem* lastItem;
-
     QGraphicsLineItem* horGuideLine;
     QGraphicsLineItem* verGuideLine;
 

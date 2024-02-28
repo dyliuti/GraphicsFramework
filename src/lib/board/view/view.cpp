@@ -1,8 +1,5 @@
 ﻿#include "view.h"
 #include "scene.h"
-#include "state/normalstate.h"
-#include "state/penstate.h"
-#include "state/selectstate.h"
 #include "state/statebase.h"
 #include "state/statemachine.h"
 #include <QDebug>
@@ -17,6 +14,9 @@ View::View(QWidget* parent)
 void View::mousePressEvent(QMouseEvent* event)
 {
     auto scene = getScene();
+    if(!scene) {
+        return;
+    }
     const auto& stateMachine = scene->getStateMachine();
     if (stateMachine->isCureentSelectType() && event->button() == Qt::LeftButton) {
         auto item = scene->itemAt(mapToScene(event->pos()), transform());

@@ -17,10 +17,6 @@ const QString MimeType = "application/com.blikoontech.painterapp";
 BOARD_NAMESPACE_USE
 Scene::Scene(QObject* parent)
     : QGraphicsScene(parent)
-    ,
-    //    lineGroup(nullptr),
-    lastEraserCircle(nullptr)
-    , lastItem(nullptr)
     , penColor(Qt::black)
     , penWidth(2)
     , penStyle(Qt::SolidLine)
@@ -42,7 +38,6 @@ void Scene::initStateMachine()
     m_stateMachine->registState(StateType::Normal, std::make_shared<NormalState>());
     m_stateMachine->registState(StateType::Pen, std::make_shared<PenState>());
     m_stateMachine->registState(StateType::Select, std::make_shared<SelectState>());
-    //    m_stateMachine->registState(StateType::SingleSelect, std::make_shared<SingleSelectState>());
     m_stateMachine->registState(StateType::BoxSelect, std::make_shared<BoxSelectState>());
     m_stateMachine->registState(StateType::Eraser, std::make_shared<StateBase>());
     m_stateMachine->registState(StateType::Rect, std::make_shared<RectangleState>());
@@ -147,29 +142,17 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent* event)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    auto item = mouseGrabberItem();
-    if (item) {
-        qInfo() << "11111122: " << __FUNCTION__ << item->scenePos();
-    }
     if (event->button() == Qt::LeftButton) {
-        qInfo() << "111111: " << __FUNCTION__ << event->scenePos();
         m_stateMachine->mousePressEvent(event);
-        //        return;
     }
 
-    // 除了绘制状态，其余都传递点击事件
     QGraphicsScene::mousePressEvent(event);
 }
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    auto item = mouseGrabberItem(); // 只在move时生效
-    if (item) {
-        qInfo() << "11111100: " << __FUNCTION__ << item->scenePos();
-    }
     if ((event->buttons() & Qt::LeftButton)) {
         m_stateMachine->mouseMoveEvent(event);
-        //        return;
     }
 
     QGraphicsScene::mouseMoveEvent(event);
@@ -177,10 +160,8 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    qInfo() << "111111: " << __FUNCTION__ << event->button() << Qt::LeftButton;
     if ((event->button() == Qt::LeftButton)) {
         m_stateMachine->mouseReleaseEvent(event);
-        //        return;
     }
 
     QGraphicsScene::mouseReleaseEvent(event);
@@ -188,244 +169,19 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
 void Scene::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Delete) {
-        //        if(selectedItems().count()  > 0){
-        //            QGraphicsItem * itemToRemove = selectedItems()[0];
-        //            RemoveCommand * removeCommand = new RemoveCommand(itemToRemove,this);
-        //            undoStack->push(removeCommand);
-        //            //            removeItem(itemToRemove);
-        //            //            delete itemToRemove;
-        //        }
-    }
+//    if (event->key() == Qt::Key_Delete) {
+//        //        if(selectedItems().count()  > 0){
+//        //            QGraphicsItem * itemToRemove = selectedItems()[0];
+//        //            RemoveCommand * removeCommand = new RemoveCommand(itemToRemove,this);
+//        //            undoStack->push(removeCommand);
+//        //            //            removeItem(itemToRemove);
+//        //            //            delete itemToRemove;
+//        //        }
+//    }
+
     QGraphicsScene::keyPressEvent(event);
 }
 
-void Scene::drawLineTo(const QPointF& endPoint)
-{
-    //    if(!lineGroup){
-    //        lineGroup = new StrokeItem();
-    //        lineGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-
-    //        AddCommand * addCommand = new AddCommand(lineGroup,this);
-    //        undoStack->push(addCommand);
-    //        //addItem(lineGroup);
-
-    //        lastPenPoint = startingPoint;
-    //    }
-
-    //    QGraphicsLineItem  *localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
-    //    QPen mPen;
-    //    mPen.setWidth(penWidth);
-    //    mPen.setColor(penColor);
-    //    localLine->setPen(mPen);
-    //    lineGroup->addToGroup(localLine);
-
-    lastPenPoint = endPoint;
-}
-
-void Scene::drawEraserAt(const QPointF& endPoint)
-{
-    //    if(!lastEraserCircle){
-    //        lastEraserCircle = addEllipse(0,0,50,50);
-    //    }
-    //    lastEraserCircle->setPos(endPoint - QPointF(lastEraserCircle->boundingRect().width()/2,
-    //                                                lastEraserCircle->boundingRect().height()/2));
-    //    eraseStrokesUnder(lastEraserCircle);
-}
-
-void Scene::eraseStrokesUnder(QGraphicsEllipseItem* item)
-{
-    //    QList<QGraphicsItem *> itemsToRemove = item->collidingItems();
-    //    QList<QGraphicsItemGroup *> groupItems;
-
-    //    foreach (QGraphicsItem * myItem, itemsToRemove) {
-
-    //        QGraphicsItemGroup * group = dynamic_cast<QGraphicsItemGroup *>(myItem);
-    //        if(group){
-    //            groupItems.append(group);
-    //        }
-
-    //        //Cast to graphicsLineItem
-    //        QGraphicsLineItem * line = dynamic_cast<QGraphicsLineItem *>(myItem);
-    //        if(line && (line != horGuideLine) && (line != verGuideLine)){
-    //            removeItem(line);
-    //            delete line;
-    //        }
-
-    //    }
-
-    //    //Remove group items that don't have any children.
-    //    foreach (QGraphicsItemGroup * group, groupItems) {
-    //        if(group->childItems().count() == 0){
-    //            qDebug() << "Group item has no child. Removing it";
-    //            removeItem(group);
-    //            delete group;
-    //        }
-    //    }
-}
-
-void Scene::drawShapeTo(const QPointF& endPoint)
-{
-    if (lastItem) {
-        removeItem(lastItem);
-        delete lastItem;
-    }
-
-    QPen mPen;
-    mPen.setColor(penColor);
-    mPen.setWidth(penWidth);
-    mPen.setStyle(penStyle);
-
-    QBrush mBrush;
-    mBrush.setColor(fillColor);
-    mBrush.setStyle(brushStyle);
-
-    QRectF itemRect(startingPoint, endPoint);
-
-    //    if(tool == Rect){
-    //        ResizableRectItem * mRect = new ResizableRectItem();
-    //        mRect->setRect(itemRect.normalized());
-    //        mRect->setBrush(mBrush);
-    //        mRect->setPen(mPen);
-    //        addItem(mRect);
-    //        mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    //        lastItem = mRect;
-    //    }
-
-    //    if(tool == Ellipse){
-    //        ResizableEllipseItem * ellipseItem = new ResizableEllipseItem();
-    //        ellipseItem->setRect(itemRect.normalized());
-    //        ellipseItem->setBrush(mBrush);
-    //        ellipseItem->setPen(mPen);
-    //        addItem(ellipseItem);
-    //        ellipseItem->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    //        lastItem = ellipseItem;
-    //    }
-    //    if(tool == Star){
-    //        ResizableStarItem * starItem = new ResizableStarItem();
-    //        starItem->setRect(itemRect.normalized());
-    //        starItem->setBrush(mBrush);
-    //        starItem->setPen(mPen);
-    //        addItem(starItem);
-    //        starItem->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    //        lastItem = starItem;
-    //    }
-}
-
-void Scene::readItemsFromDataStream(QDataStream& in, bool copyPaste)
-{
-    /*
-     * We want the new pasted item(s) to be the selected item(s)
-     * */
-    clearSelection();
-
-    qint32 itemType;
-
-    //    while (!in.atEnd()) {
-    //        in >> itemType;
-
-    //        switch (itemType) {
-
-    //        case ResizableRectType :{
-    //            ResizableRectItem * rectItem = new ResizableRectItem();
-    //            in >> *rectItem;
-    //            rectItem->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    //            addItem(rectItem);
-    //            if(copyPaste){
-    //                rectItem->moveBy(10,10);
-    //                rectItem->setSelected(true);
-    //            }
-    //            break;
-    //        }
-
-    //        case ResizableEllipseType :{
-
-    //            ResizableEllipseItem *ellipseItem = new ResizableEllipseItem();
-    //            in >> *ellipseItem;
-    //            ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
-    //            ellipseItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    //            addItem(ellipseItem);
-    //            if(copyPaste){
-    //                ellipseItem->moveBy(10,10);
-    //                ellipseItem->setSelected(true);
-    //            }
-    //            break;
-    //        }
-
-    //        case ResizablePixmapType :{
-    //            ResizablePixmapItem *pixmapItem = new ResizablePixmapItem(QPixmap());
-    //            in >> *pixmapItem;
-    //            pixmapItem->setFlag(QGraphicsItem::ItemIsMovable);
-    //            pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    //            addItem(pixmapItem);
-    //            if(copyPaste){
-    //                pixmapItem->moveBy(10,10);
-    //                pixmapItem->setSelected(true);
-    //            }
-    //            break;
-    //        }
-
-    //        case ResizableStarType :{
-
-    //            ResizableStarItem *starItem = new ResizableStarItem();
-    //            in >> *starItem;
-    //            starItem->setFlag(QGraphicsItem::ItemIsMovable);
-    //            starItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    //            addItem(starItem);
-    //            if(copyPaste){
-    //                starItem->moveBy(10,10);
-    //                starItem->setSelected(true);
-    //            }
-    //            break;
-    //        }
-
-    //        case StrokeType :{
-    //            StrokeItem *strokeItem = new StrokeItem();
-    //            in >> *strokeItem;
-    //            strokeItem->setFlag(QGraphicsItem::ItemIsMovable);
-    //            strokeItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    //            addItem(strokeItem);
-    //            if(copyPaste){
-    //                strokeItem->moveBy(100,100);
-    //                strokeItem->setSelected(true);
-    //            }
-    //            break;
-    //        }
-
-    //        }
-
-    //    }
-}
-
-void Scene::writeItemsToDataStream(QDataStream& out, const QList<QGraphicsItem*>& items)
-{
-    //    foreach (QGraphicsItem * item, items) {
-
-    //        qint32 type = static_cast<qint32>(item->type());
-    //        out << type;
-
-    //        switch (type) {
-
-    //        case ResizableRectType :
-    //            out << *static_cast<ResizableRectItem *>(item);
-    //            break;
-    //        case ResizableEllipseType :
-    //            out << *static_cast<ResizableEllipseItem *>(item);
-    //            break;
-    //        case ResizablePixmapType :
-    //            out << *static_cast<ResizablePixmapItem *>(item);
-    //            break;
-    //        case ResizableStarType :
-    //            out << *static_cast<ResizableStarItem *>(item);
-    //            break;
-    //        case StrokeType :
-    //            out << *static_cast<StrokeItem *>(item);
-    //            break;
-
-    //        }
-
-    //    }
-}
 
 Qt::BrushStyle Scene::getBrushStyle() const
 {
@@ -441,7 +197,7 @@ void Scene::copy()
 {
     QByteArray mByteArray;
     QDataStream out(&mByteArray, QIODevice::WriteOnly);
-    writeItemsToDataStream(out, selectedItems());
+//    writeItemsToDataStream(out, selectedItems());
     QMimeData* mimeData = new QMimeData;
     mimeData->setData(MimeType, mByteArray);
     QClipboard* clipboard = QApplication::clipboard();
@@ -455,7 +211,7 @@ void Scene::cut()
 
     QList<QGraphicsItem*> itemList = selectedItems();
 
-    writeItemsToDataStream(out, itemList);
+//    writeItemsToDataStream(out, itemList);
     QMimeData* mimeData = new QMimeData;
     mimeData->setData(MimeType, mByteArray);
     QClipboard* clipboard = QApplication::clipboard();
@@ -480,7 +236,7 @@ void Scene::paste()
         QByteArray mByteArray = mimeData->data(MimeType);
         QDataStream in(&mByteArray, QIODevice::ReadOnly);
 
-        readItemsFromDataStream(in);
+//        readItemsFromDataStream(in);
     }
 }
 
@@ -492,7 +248,7 @@ void Scene::saveScene(QString& filename)
         return;
 
     QDataStream dataStream(&file);
-    writeItemsToDataStream(dataStream, items());
+//    writeItemsToDataStream(dataStream, items());
 
     file.close();
 }
@@ -503,7 +259,7 @@ void Scene::loadScene(QString& filename)
     if (!file.open(QIODevice::ReadOnly))
         return;
     QDataStream dataStream(&file);
-    readItemsFromDataStream(dataStream, false);
+//    readItemsFromDataStream(dataStream, false);
     file.close();
 }
 
