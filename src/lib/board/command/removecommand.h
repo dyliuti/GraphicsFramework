@@ -1,7 +1,6 @@
 ﻿#ifndef BOARD_REMOVE_COMMAND_H
 #define BOARD_REMOVE_COMMAND_H
 
-#include "boarddefine.h"
 #include "iundoredocommand.h"
 
 BOARD_NAMESPACE_BEGIN

@@ -1,4 +1,5 @@
 ﻿#include "addcommand.h"
+#include <QGraphicsScene>
 
 BOARD_NAMESPACE_USE
 void AddCommand::exec()

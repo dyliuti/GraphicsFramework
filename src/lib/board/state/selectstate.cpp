@@ -1,6 +1,9 @@
 ﻿#include "selectstate.h"
 #include <QDebug>
 #include <QGraphicsItemGroup>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include "view/scene.h"
 
 BOARD_NAMESPACE_USE
 void SelectState::mouseMoveEvent(QGraphicsSceneMouseEvent* event)

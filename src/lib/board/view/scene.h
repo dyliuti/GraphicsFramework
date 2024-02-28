@@ -5,7 +5,6 @@
 #define BOARD_SCENE_H
 
 #include "board_global.h"
-#include "boarddefine.h"
 #include "state/statemachine.h"
 #include <QGraphicsScene>
 #include <QUndoStack>
@@ -47,18 +46,9 @@ public:
     void undo();
     void redo();
 
-signals:
-
-public slots:
-    // view1 view2
-    // scene
-    // QGraphicsScene interface
 protected:
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     void dropEvent(QGraphicsSceneDragDropEvent* event) override;
-
-    // QGraphicsScene interface
-protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

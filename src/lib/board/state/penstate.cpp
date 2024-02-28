@@ -1,6 +1,7 @@
 ﻿#include "penstate.h"
 #include <QDebug>
 #include <QGraphicsItemGroup>
+#include "view/scene.h"
 
 BOARD_NAMESPACE_USE
 static QGraphicsItemGroup* s_lineGroup = nullptr;

@@ -1,7 +1,7 @@
 ﻿#ifndef BOARD_ICOMMANDCTRL_H
 #define BOARD_ICOMMANDCTRL_H
 
-#include "boarddefine.h"
+#include "board_global.h"
 #include <QObject>
 #include <memory>
 

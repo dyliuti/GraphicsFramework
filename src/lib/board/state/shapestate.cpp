@@ -1,6 +1,7 @@
 ﻿#include "shapestate.h"
 #include <QGraphicsRectItem>
 #include "qmath.h"
+#include "view/scene.h"
 
 BOARD_NAMESPACE_USE
 static QGraphicsRectItem* s_rectItem = nullptr;

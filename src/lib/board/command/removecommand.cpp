@@ -1,4 +1,5 @@
 ﻿#include "removecommand.h"
+#include <QGraphicsScene>
 
 BOARD_NAMESPACE_USE
 void RemoveCommand::exec()

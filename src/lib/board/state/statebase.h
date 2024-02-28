@@ -10,6 +10,8 @@
 #include <functional>
 
 BOARD_NAMESPACE_BEGIN
+class Scene;
+class View;
 class StateBase {
 public:
     typedef std::shared_ptr<StateBase> ptr;

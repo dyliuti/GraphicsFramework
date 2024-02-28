@@ -3,7 +3,7 @@
 
 #include "icommandctrl.h"
 
-#include "boarddefine.h"
+#include "board_global.h"
 #include <QVector>
 
 BOARD_NAMESPACE_BEGIN

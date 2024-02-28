@@ -1,7 +1,6 @@
 ﻿#ifndef BOARD_MOVE_COMMAND_H
 #define BOARD_MOVE_COMMAND_H
 
-#include "boarddefine.h"
 #include "iundoredocommand.h"
 
 BOARD_NAMESPACE_BEGIN

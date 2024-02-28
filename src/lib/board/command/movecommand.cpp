@@ -1,4 +1,5 @@
 ﻿#include "movecommand.h"
+#include <QGraphicsItem>
 
 BOARD_NAMESPACE_USE
 void MoveCommand::exec()

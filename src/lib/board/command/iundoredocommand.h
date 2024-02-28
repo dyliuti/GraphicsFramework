@@ -1,10 +1,12 @@
 ﻿#ifndef BOARD_IUNDOREDOCOMMAND_H
 #define BOARD_IUNDOREDOCOMMAND_H
-#include "boarddefine.h"
+#include "board_global.h"
 #include <QString>
 #include <QVector>
 #include <memory>
 
+class QGraphicsItem;
+class QGraphicsScene;
 BOARD_NAMESPACE_BEGIN
 struct CommandInfo {
     QString commandName;

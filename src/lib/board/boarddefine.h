@@ -5,13 +5,11 @@
 #define BOARD_DEFINE_H
 
 #include "board_global.h"
-#include "view/scene.h"
 #include <QGraphicsItem>
 #include <QPointF>
 #include <set>
 
 BOARD_NAMESPACE_BEGIN
-class Scene;
 enum class BOARD_EXPORT StateType {
     Undefined = -1,
     Normal = 0, // 仅是鼠标移动，不做选择也不做绘制

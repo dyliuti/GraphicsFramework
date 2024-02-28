@@ -1,7 +1,7 @@
 ﻿#ifndef BOARD_ADD_COMMAND_H
 #define BOARD_ADD_COMMAND_H
 
-#include "boarddefine.h"
+#include "board_global.h"
 #include "iundoredocommand.h"
 
 BOARD_NAMESPACE_BEGIN
