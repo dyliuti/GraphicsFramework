@@ -1,6 +1,7 @@
 
 #include "canvasGL.h"
-#include "gl/GL.h"
+//#include "gl/GL.h"
+#include <QDebug>
 
 CanvasGL::CanvasGL(QWidget* parent)
     : QOpenGLWidget(parent)/*,
@@ -13,8 +14,9 @@ CanvasGL::CanvasGL(QWidget* parent)
     format.setProfile(QSurfaceFormat::CoreProfile);
 
     m_glContext.setFormat(format);
-    if (!m_glContext.create())
+    if (!m_glContext.create()) {
         throw std::runtime_error("context creation failed");
+    }
 
     m_surface.setFormat(m_glContext.format());
     m_surface.create();
@@ -109,12 +111,19 @@ void CanvasGL::initializeGL() {
 //        glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 //        glClear(GL_COLOR_BUFFER_BIT);
 
+//        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
+//        makeCurrent();
+        qInfo() << __FUNCTION__ << "777777";
+//        glClear(GL_COLOR_BUFFER_BIT);
 //        // 绘制矩形
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_SCISSOR_TEST);
         glScissor(50, 200, 50, 50);
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-//        glDisable(GL_BLEND);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDisable(GL_BLEND);
+//        doneCurrent();
     });
 }
 
@@ -138,11 +147,11 @@ void CanvasGL::paintGL() {
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-//    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    //    glDisable(GL_BLEND);
+//        glDisable(GL_BLEND);
 }
 
 void CanvasGL::resizeEvent(QResizeEvent *event)
