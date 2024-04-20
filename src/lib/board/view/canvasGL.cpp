@@ -2,6 +2,7 @@
 #include "canvasGL.h"
 //#include "gl/GL.h"
 #include <QDebug>
+#include <QDateTime>
 
 CanvasGL::CanvasGL(QWidget* parent)
     : QOpenGLWidget(parent)/*,
@@ -27,8 +28,9 @@ CanvasGL::~CanvasGL() {
 }
 
 void CanvasGL::setRenderFunction(std::function<void()> renderFunction) {
-    m_renderFunction = [this, func = std::move(renderFunction)]() {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_offscreenFramebuffer);
+    m_renderFunction = [this, func = renderFunction]() {
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
+        //glBindFramebuffer(GL_FRAMEBUFFER, m_offscreenFramebuffer);
         func();
         glFlush();
         QMetaObject::invokeMethod(this, "update");
@@ -113,13 +115,13 @@ void CanvasGL::initializeGL() {
 
 //        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
 //        makeCurrent();
-        qInfo() << __FUNCTION__ << "777777";
+        qInfo() << __FUNCTION__ << "777777" << QDateTime::currentDateTime();
 //        glClear(GL_COLOR_BUFFER_BIT);
 //        // 绘制矩形
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//        glEnable(GL_BLEND);
+//        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_SCISSOR_TEST);
-        glScissor(50, 200, 50, 50);
+        glScissor(50, 50, 100, 100);
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glDisable(GL_BLEND);
@@ -136,10 +138,10 @@ void CanvasGL::paintGL() {
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-//    glEnable(GL_SCISSOR_TEST);
-//    glScissor(100, 50, 100, 100);
-//    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(100, 0, 50, 50);
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
 //    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
 
@@ -147,7 +149,7 @@ void CanvasGL::paintGL() {
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-    glDisable(GL_DEPTH_TEST);
+//    glDisable(GL_DEPTH_TEST);
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 

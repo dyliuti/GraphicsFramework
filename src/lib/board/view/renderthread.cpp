@@ -99,11 +99,11 @@ void RenderThread::runAllTasks() {
     }
 
     for (const auto& task : tasksOnRenderThread) {
-        if (task.task) {
-            task.task();
-        } else if (task.taskPtr && *task.taskPtr) {
+        if (task.func) {
+            task.func();
+        } /*else if (task.taskPtr && *task.taskPtr) {
             (*task.taskPtr)();
-        }
+        }*/
         //  assert(m_tasksOnRenderThread.size() < 100);
     }
 }

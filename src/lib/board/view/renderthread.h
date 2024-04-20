@@ -21,8 +21,8 @@ class BOARD_EXPORT RenderThread : public QObject {
         CanvasRender
     };
     struct Task {
-        std::shared_ptr<std::function<void()>> taskPtr;
-        std::function<void()> task;
+        //std::shared_ptr<std::function<void()>> taskPtr;
+        std::function<void()> func;
         int id = 0;
 
         bool operator<(const Task& b) {
@@ -38,12 +38,13 @@ class BOARD_EXPORT RenderThread : public QObject {
     static Task makeTask(T&& func, RenderType id = TaskRender) {
         Task t;
         t.id = id;
-        typedef typename std::decay<T>::type RealT;
-        if constexpr (std::is_same_v<RealT, decltype(t.taskPtr)>) {
-            t.taskPtr = std::forward<T>(func);
-        } else {
-            t.task = std::forward<T>(func);
-        }
+        t.func = std::forward<T>(func);
+//        typedef typename std::decay<T>::type RealT;
+//        if constexpr (std::is_same_v<RealT, decltype(t.taskPtr)>) {
+//            t.taskPtr = std::forward<T>(func);
+//        } else {
+//            t.task = std::forward<T>(func);
+//        }
 
         return t;
     }
