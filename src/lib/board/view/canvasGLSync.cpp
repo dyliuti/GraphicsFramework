@@ -25,12 +25,6 @@ CanvasGLSync::~CanvasGLSync() {
     cleanup();
 }
 
-
-
-//void CanvasGLSync::render() {
-
-//}
-
 QSize CanvasGLSync::minimumSizeHint() const {
     return QSize(50, 50);
 }
@@ -54,10 +48,6 @@ void CanvasGLSync::initializeGL() {
 }
 
 void CanvasGLSync::paintGL() {
-    if (!m_timer.isActive()) {
-        m_timer.start(1000 / 30);
-    }
-
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
