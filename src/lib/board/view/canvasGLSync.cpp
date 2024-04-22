@@ -1,12 +1,13 @@
-
+﻿
 #include "CanvasGLSync.h"
-//#include "gl/GL.h"
-#include <QDebug>
+// #include "gl/GL.h"
 #include <QDateTime>
+#include <QDebug>
 
 CanvasGLSync::CanvasGLSync(QWidget* parent)
-    : QOpenGLWidget(parent)/*,
-      QOpenGLFunctions(&m_glContext)*/ {
+    : QOpenGLWidget(parent) /*,
+       QOpenGLFunctions(&m_glContext)*/
+{
     QSurfaceFormat format;
     format.setMajorVersion(3);
     format.setMinorVersion(3);
@@ -21,19 +22,23 @@ CanvasGLSync::CanvasGLSync(QWidget* parent)
     m_surface.create();
 }
 
-CanvasGLSync::~CanvasGLSync() {
+CanvasGLSync::~CanvasGLSync()
+{
     cleanup();
 }
 
-QSize CanvasGLSync::minimumSizeHint() const {
+QSize CanvasGLSync::minimumSizeHint() const
+{
     return QSize(50, 50);
 }
 
-QSize CanvasGLSync::sizeHint() const {
+QSize CanvasGLSync::sizeHint() const
+{
     return QSize(400, 400);
 }
 
-void CanvasGLSync::cleanup() {
+void CanvasGLSync::cleanup()
+{
     if (m_timer.isActive()) {
         m_timer.stop();
     }
@@ -43,11 +48,13 @@ void CanvasGLSync::cleanup() {
     doneCurrent();
 }
 
-void CanvasGLSync::initializeGL() {
+void CanvasGLSync::initializeGL()
+{
     initializeOpenGLFunctions();
 }
 
-void CanvasGLSync::paintGL() {
+void CanvasGLSync::paintGL()
+{
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -56,11 +63,15 @@ void CanvasGLSync::paintGL() {
     glScissor(100, 0, 50, 50);
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    //    nvgBeginPath(m_vg);
+    //    nvgRect(m_vg, 100, 100, 120, 30);
+    //    nvgFillColor(m_vg, nvgRGBA(255, 192, 0, 255));
+    //    nvgFill(m_vg);
 }
 
-void CanvasGLSync::resizeEvent(QResizeEvent *event)
+void CanvasGLSync::resizeEvent(QResizeEvent* event)
 {
-//    update();
+    //    update();
     QWidget::resizeEvent(event);
 }
-
