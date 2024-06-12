@@ -8,8 +8,8 @@ int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
 
-    //    CanvasGL canvas;
-    //    canvas.show();
+//        CanvasGL canvas;
+//        canvas.show();
 
     CanvasGLSync syncCanvas;
     syncCanvas.show();

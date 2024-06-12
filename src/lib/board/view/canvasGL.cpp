@@ -1,4 +1,4 @@
-
+﻿
 #include "canvasGL.h"
 //#include "gl/GL.h"
 #include <QDebug>
@@ -29,8 +29,8 @@ CanvasGL::~CanvasGL() {
 
 void CanvasGL::setRenderFunction(std::function<void()> renderFunction) {
     m_renderFunction = [this, func = renderFunction]() {
-        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
-        //glBindFramebuffer(GL_FRAMEBUFFER, m_offscreenFramebuffer);
+//        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
+        glBindFramebuffer(GL_FRAMEBUFFER, m_offscreenFramebuffer);
         func();
         glFlush();
         QMetaObject::invokeMethod(this, "update");
@@ -120,6 +120,7 @@ void CanvasGL::initializeGL() {
 //        // 绘制矩形
 //        glEnable(GL_BLEND);
 //        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        // func 内容
         glEnable(GL_SCISSOR_TEST);
         glScissor(50, 50, 100, 100);
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
@@ -148,12 +149,11 @@ void CanvasGL::paintGL() {
 //    glClearColor(0, 0, 0, 1);
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
 //    glDisable(GL_DEPTH_TEST);
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-//        glDisable(GL_BLEND);
+//    glDisable(GL_BLEND);
 }
 
 void CanvasGL::resizeEvent(QResizeEvent *event)

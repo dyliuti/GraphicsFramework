@@ -7,7 +7,6 @@ HandleItem::HandleItem(Position position) :
     handlePosition(position)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
-
 }
 
 void HandleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

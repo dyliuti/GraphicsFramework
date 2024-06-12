@@ -13,8 +13,8 @@
 #include <QTimer>
 #include <QWidget>
 
-#include "item/opengl/nanovg/nanovg.h"
-#include "item/opengl/nanovg/nanovg_gl.h"
+//#include "item/opengl/nanovg/nanovg.h"
+//#include "item/opengl/nanovg/nanovg_gl.h"
 class BOARD_EXPORT CanvasGLSync : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
 public:
@@ -35,6 +35,6 @@ protected:
     QTimer m_timer;
     QOpenGLContext m_glContext;
     QOffscreenSurface m_surface;
-    NVGcontext* m_vg = nullptr;
+    //NVGcontext* m_vg = nullptr;
 };
 #endif // CANVAS_GL_SYNC_H
