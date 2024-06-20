@@ -1,33 +1,23 @@
-//
-// Created by xukong on 2022/3/11.
-//
-
-#pragma once
-#include <OpenGL/gl.h>
-#include <OpenGL/gl3.h>
-#include <OpenGL/glext.h>
-#include <OpenGL/gltypes.h>
+﻿#pragma once
+#include "glutil.h"
 #include <cassert>
 #include <memory>
-#include "glutil.h"
-#include "middleware/common/macros.h"
-
-NAMESPACE_MIDDLEWARE_BEGIN
 
 namespace render::gl {
-class TextureLoader final {
-   public:
-    TextureLoader();
+class UTIL_EXPORT TextureLoader : public OpenGLBase {
+public:
+    using OpenGLBase::OpenGLBase;
 
     ~TextureLoader();
 
     template <GLuint type>
-    void LoadData2Texture2D(int width, int height, uint8_t* raw_data, int stride) {
+    void LoadData2Texture2D(int width, int height, uint8_t* raw_data, int stride)
+    {
         uint8_t* data_to_load = nullptr;
         int old_alignment;
 
-        glGetIntegerv(GL_UNPACK_ALIGNMENT, &old_alignment);
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        m_gl->glGetIntegerv(GL_UNPACK_ALIGNMENT, &old_alignment);
+        m_gl->glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
         size_t copy_size = width;
 
         if (type == GL_LUMINANCE) {
@@ -65,24 +55,25 @@ class TextureLoader final {
             data_to_load = m_buffer.get();
         }
 
-        glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, data_to_load);
-        glPixelStorei(GL_UNPACK_ALIGNMENT, old_alignment);
+        m_gl->glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, data_to_load);
+        m_gl->glPixelStorei(GL_UNPACK_ALIGNMENT, old_alignment);
     }
 
     template <GLuint type>
     // type is GL_LUMINANCE or GL_RGBA
-    GLenum LoadDataToTexture(GLuint tex_id, int width, int height, uint8_t* rawData, int stride) {
-        glBindTexture(GL_TEXTURE_2D, tex_id);
-        CheckGlError("before LoadData2Texture2D.");
+    GLenum LoadDataToTexture(GLuint tex_id, int width, int height, uint8_t* rawData, int stride)
+    {
+
+        m_gl->glBindTexture(GL_TEXTURE_2D, tex_id);
+        //        CheckGlError("before LoadData2Texture2D.");
         LoadData2Texture2D<type>(width, height, rawData, stride);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        CheckGlError("Bind Textures.");
+        m_gl->glBindTexture(GL_TEXTURE_2D, 0);
+        // CheckGlError("Bind Textures.");
         return GL_NO_ERROR;
     }
 
-   private:
+private:
     std::unique_ptr<uint8_t[]> m_buffer;
     size_t m_bufferLen = 0;
 };
-}  // namespace render::gl
-NAMESPACE_MIDDLEWARE_END
+} // namespace render::gl

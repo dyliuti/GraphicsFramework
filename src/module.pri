@@ -2,7 +2,7 @@
 MODULE_PRI_INCLUDED = 1
 
 ### define avaliable ymw module list
-avaliable_modules += board qmlplugin widgetbase
+avaliable_modules += board qmlplugin widgetbase util
 
 win32 {
     !contains(QMAKE_TARGET.arch, x86_64) {
@@ -94,4 +94,12 @@ contains(enabled_modules, qmlplugin){
     QML_IMPORT_PATH = $$OUTPUT_PWD
 
     LIBS += -L$$OUTPUT_PWD/qmlPlugin -lqmlPlugin
+}
+
+# util
+contains(enabled_modules, util){
+    INCLUDEPATH *= $$PWD/lib
+    INCLUDEPATH *= $$PWD/lib/util
+
+    LIBS += -L$$OUTPUT_PWD/util -lutil
 }

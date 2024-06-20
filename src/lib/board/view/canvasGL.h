@@ -1,20 +1,25 @@
-//
+﻿//
 // Created by yanminwei on 2024/2/29.
 //
 
 #ifndef CANVAS_GL_H
 #define CANVAS_GL_H
 
+#include "board_global.h"
+#include "opengl/texturedrawer.h"
+#include "renderthread.h"
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
-#include "renderthread.h"
-#include <QWidget>
 #include <QTimer>
-#include "board_global.h"
+#include <QWidget>
 
+struct VideoFrame;
+// namespace render::gl {
+// class TextureDrawer;
+// }
 class BOARD_EXPORT CanvasGL : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
-   public:
+public:
     explicit CanvasGL(QWidget* parent = nullptr);
     virtual ~CanvasGL();
     void setRenderFunction(std::function<void()> renderFunction);
@@ -31,6 +36,9 @@ protected:
 
 private:
     void cleanup();
+    std::shared_ptr<VideoFrame> generateVideoFrame(QString filePath);
+    std::shared_ptr<VideoFrame> generateVideoFrame(int width, int height);
+    void generateBackgroundVideoFrame();
 
 protected:
     QTimer m_timer;
@@ -38,6 +46,11 @@ protected:
     QOpenGLContext m_glContext;
     QOffscreenSurface m_surface;
     std::function<void()> m_renderFunction;
-    unsigned int m_offscreenFramebuffer{};
+    unsigned int m_offscreenFramebuffer {};
+
+    std::unique_ptr<render::gl::TextureDrawer> m_textureDrawer;
+    std::shared_ptr<VideoFrame> m_backgroundFrame;
+    std::shared_ptr<VideoFrame> m_inputFrame;
+    std::shared_ptr<VideoFrame> m_outputFrame;
 };
-#endif //CANVAS_GL_H
+#endif // CANVAS_GL_H
