@@ -1,48 +1,17 @@
 ﻿#pragma once
 #include "glutil.h"
-#include <cstdio>
-#include <memory>
+#include <QImage>
 
 namespace render::gl {
 class UTIL_EXPORT Texture : public OpenGLBase {
 public:
-    Texture()
-        : OpenGLBase()
-    {
-    }
-    Texture(GLuint textureId)
-        : OpenGLBase()
-        , m_textureId(textureId)
-    {
-    }
-
-    virtual ~Texture()
-    {
-        release();
-    }
-
-    operator GLuint&()
-    {
-        return m_textureId;
-    }
-
-    GLuint textureId()
-    {
-        return m_textureId;
-    }
-
-    void createNew()
-    {
-        GLuint textureId;
-        m_gl->glGenTextures(1, &textureId);
-        m_gl->glBindTexture(GL_TEXTURE_2D, textureId);
-        m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        m_gl->glBindTexture(GL_TEXTURE_2D, 0);
-        m_textureId = textureId;
-    }
+    Texture(QString imagePath);
+    Texture(const QImage& image);
+    virtual ~Texture();
+    void setMipmapEnable(bool enable) {m_mipmapEnable = enable;}
+    void setWrapMode(GLint wrapMode) {m_wrapMode = wrapMode;}
+    void setFilterMode(GLint filterMode) {m_filterMode = filterMode;}
+    GLuint textureId() { return m_textureId;}
 
     void release()
     {
@@ -52,7 +21,14 @@ public:
         }
     }
 
+protected:
+    void genTexture(const QImage& image);
+    GLint convertQImageFormatToGL(const QImage& image);
+
 private:
     GLuint m_textureId = 0;
+    GLint m_wrapMode = GL_REPEAT;
+    GLint m_filterMode = GL_LINEAR;
+    bool m_mipmapEnable = false;
 };
 } // namespace render::gl

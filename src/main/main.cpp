@@ -1,7 +1,6 @@
 ﻿#include "mainwindow.h"
-
 #include "view/canvasGL.h"
-#include "view/canvasGLSync.h"
+#include "view/canvasGLSync2.h"
 #include <QApplication>
 
 int main(int argc, char* argv[])
@@ -11,7 +10,7 @@ int main(int argc, char* argv[])
     //    CanvasGL canvas;
     //    canvas.show();
 
-    CanvasGLSync syncCanvas;
+    CanvasGLSync2 syncCanvas;
     syncCanvas.show();
     //    MainWindow w;
     //    w.show();

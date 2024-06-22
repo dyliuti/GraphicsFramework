@@ -104,24 +104,19 @@ std::shared_ptr<VideoFrame> CanvasGL::generateVideoFrame(QString filePath)
     //    uint32_t width = (image.width() + 0x01) & (~0x01);
     //    uint32_t height = (image.height() + 0x01) & (~0x01);
     //    image = image.scaled(width, height, Qt::KeepAspectRatio);
-    auto qtexture = std::make_unique<QOpenGLTexture>(image);
-    auto texture = std::make_shared<render::gl::Texture>(qtexture->textureId());
-    //    std::shared_ptr<Texture> texturePtr(texture, [=](Texture* texture) {
-    //        delete qtexture;
-    //        delete texture;
-    //    });
+    auto texture = std::make_shared<render::gl::Texture>(image);
 
-    return std::make_shared<VideoFrame>(texture, qtexture->width(), qtexture->height());
+    return std::make_shared<VideoFrame>(texture, image.width(), image.height());
 }
 
 std::shared_ptr<VideoFrame> CanvasGL::generateVideoFrame(int width, int height)
 {
     using Texture = render::gl::Texture;
-    auto texture = std::make_shared<Texture>();
-    texture->createNew();
-    glBindTexture(GL_TEXTURE_2D, texture->textureId());
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    auto texture = std::make_shared<Texture>("");
+//    texture->createNew();
+//    glBindTexture(GL_TEXTURE_2D, texture->textureId());
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+//    glBindTexture(GL_TEXTURE_2D, 0);
     return std::make_shared<VideoFrame>(texture, width, height);
 }
 

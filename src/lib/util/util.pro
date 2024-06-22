@@ -13,11 +13,13 @@ HEADERS += \
     imageutil.h \
     jsonutil.h \
     mathutil.h \
+    opengl/buffer.h \
     opengl/glutil.h \
     opengl/shaderprogram.h \
     opengl/texture.h \
     opengl/texturedrawer.h \
     opengl/textureloader.h \
+    opengl/vertexarrayobject.h \
     opengl/videoframe.h \
     opengl/viewport.h \
     private/SystemStatusBasePrivate.h \
@@ -31,11 +33,13 @@ SOURCES += \
     imageutil.cpp \
     jsonutil.cpp \
     mathutil.cpp \
+    opengl/buffer.cpp \
     opengl/glutil.cpp \
     opengl/shaderprogram.cpp \
     opengl/texture.cpp \
     opengl/texturedrawer.cpp \
     opengl/textureloader.cpp \
+    opengl/vertexarrayobject.cpp \
     opengl/videoframe.cpp \
     opengl/viewport.cpp \
     private/SystemStatusBasePrivate.cpp \

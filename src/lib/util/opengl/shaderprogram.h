@@ -6,14 +6,9 @@ namespace render::gl {
 class UTIL_EXPORT ShaderProgram : public OpenGLBase {
 public:
     ShaderProgram() = default;
-    ~ShaderProgram()
-    {
-        if (m_programId) {
-            m_gl->glDeleteProgram(m_programId);
-            m_programId = 0;
-        }
-    }
+    ~ShaderProgram();
     bool createProgram(const char* vertex_shader, const char* fragment_shader);
+    bool createProgram(QString vertexFile, QString fragmentFile);
     GLuint programId() const
     {
         return m_programId;
@@ -25,10 +20,8 @@ public:
 
 protected:
     GLuint loadShader(GLenum type, const char* source);
-
-    bool checkGlShaderCompilation(const char* message, GLuint shader);
-
-    bool checkGlProgramLink(const char* message, GLuint program);
+    bool checkShaderCompilation(const char* message, GLuint shader);
+    bool checkProgramLink(const char* message, GLuint program);
 
 private:
     GLuint m_programId = 0;
