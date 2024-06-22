@@ -23,7 +23,7 @@ public:
 
 protected:
     void genTexture(const QImage& image);
-    GLint convertQImageFormatToGL(const QImage& image);
+    QImage convertQImageFormatToGL(const QImage& image, GLuint& glFormat);
 
 private:
     GLuint m_textureId = 0;

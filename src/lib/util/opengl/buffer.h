@@ -6,7 +6,7 @@ namespace render::gl {
 class UTIL_EXPORT Buffer : public OpenGLBase
 {
 public:
-    Buffer() {m_gl->glGenBuffers(1, &m_bufferId);};
+    Buffer();
     virtual ~Buffer() {destory();};
     virtual void bind() = 0;
     virtual void release() = 0;

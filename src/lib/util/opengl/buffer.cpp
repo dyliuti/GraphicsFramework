@@ -1,5 +1,10 @@
 #include "buffer.h"
 
+render::gl::Buffer::Buffer() : OpenGLBase()
+{
+    m_gl->glGenBuffers(1, &m_bufferId);
+}
+
 void render::gl::Buffer::destory() {
     if(m_bufferId != 0) {
         m_gl->glDeleteBuffers(1, &m_bufferId);

@@ -7,6 +7,7 @@
 #include "opengl/shaderprogram.h"
 #include "opengl/buffer.h"
 #include "opengl/vertexarrayobject.h"
+#include "opengl/framebufferobject.h"
 
 // Shaders
 const GLchar* vertexShaderSource = "#version 330 core\n"
@@ -140,15 +141,13 @@ std::shared_ptr<VideoFrame> CanvasGLSync2::generateBackgroundVideoFrame()
     return backgroundFrame;
 }
 
-std::unique_ptr<render::gl::Texture> s_texture;
-GLuint VAO;
 void CanvasGLSync2::initializeGL()
 {
     qInfo() << "gl initializeGL: ";
     initializeOpenGLFunctions();
     m_textureDrawer = std::make_unique<render::gl::TextureDrawer>();
     m_program = std::make_unique<render::gl::ShaderProgram>();
-    m_program->createProgram(QString("D:/Git/OpenGL/Lesson1/Shaders/Textures.vs"), QString("D:/Git/OpenGL/Lesson1/Shaders/Textures.frag"));
+    m_program->createProgram(QString("D:/Work/GraphicsFramework/resource/shader/model.vs"), QString("D:/Work/GraphicsFramework/resource/shader/model.frag"));
 
     GLfloat vertices[] = {
         // Positions          // Colors           // Texture Coords
@@ -158,8 +157,8 @@ void CanvasGLSync2::initializeGL()
         -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
     };
     GLuint indices[] = {  // Note that we start from 0!
-        0, 1, 3, // First Triangle
-        1, 2, 3  // Second Triangle
+        0, 1, 3, // First Triangle top right Tri
+        1, 2, 3  // Second Triangle bottom left Tri
     };
     m_vertexArray = std::make_unique<VertexArrayObject>();
     m_vertexArray->bind();
@@ -183,7 +182,11 @@ void CanvasGLSync2::initializeGL()
     m_vertexArray->release();
 
     // Load and create a texture
-    s_texture = std::make_unique<render::gl::Texture>("D:/Git/OpenGL/Lesson1/Image/container.jpg");
+    auto texture = std::make_shared<render::gl::Texture>("D:/Work/GraphicsFramework/resource/model/facemodel.png");
+    m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
+    m_offscreenFBO->bind();
+    m_offscreenFBO->attachTexture();
+    m_offscreenFBO->release();
 }
 
 void CanvasGLSync2::paintGL()
@@ -207,15 +210,15 @@ void CanvasGLSync2::paintGL()
     // m_textureDrawer->drawTexture(m_backgroundFrame, viewPort, false);
 
     // Bind Texture   在哪个bind前后都没关系
-    glBindTexture(GL_TEXTURE_2D, s_texture->textureId());
+    glBindTexture(GL_TEXTURE_2D, m_offscreenFBO->texture());
 
     // Activate shader
     m_program->useProgram();
 
-    // Draw container
-    glBindVertexArray(m_vertexArray->objectId());
+    // draw model
+    m_vertexArray->bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    m_vertexArray->release();
 
     // Set up vertex data (and buffer(s)) and attribute pointers
 

@@ -7,7 +7,7 @@ class Buffer;
 class UTIL_EXPORT VertexArrayObject : public OpenGLBase
 {
 public:
-    VertexArrayObject() {m_gl->glGenVertexArrays(1, &m_objectId);}
+    VertexArrayObject();
     ~VertexArrayObject() {destory();}
     void bind() {m_gl->glBindVertexArray(m_objectId);}
     void release() {m_gl->glBindVertexArray(0);}

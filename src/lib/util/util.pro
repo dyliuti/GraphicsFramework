@@ -14,6 +14,7 @@ HEADERS += \
     jsonutil.h \
     mathutil.h \
     opengl/buffer.h \
+    opengl/framebufferobject.h \
     opengl/glutil.h \
     opengl/shaderprogram.h \
     opengl/texture.h \
@@ -34,6 +35,7 @@ SOURCES += \
     jsonutil.cpp \
     mathutil.cpp \
     opengl/buffer.cpp \
+    opengl/framebufferobject.cpp \
     opengl/glutil.cpp \
     opengl/shaderprogram.cpp \
     opengl/texture.cpp \

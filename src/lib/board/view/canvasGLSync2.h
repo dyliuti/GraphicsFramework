@@ -17,6 +17,7 @@ struct VideoFrame;
 namespace render::gl {
     class ShaderProgram;
     class VertexArrayObject;
+    class FrameBufferObject;
 }
 
 class BOARD_EXPORT CanvasGLSync2 : public QOpenGLWidget, protected QOpenGLExtraFunctions {
@@ -46,6 +47,7 @@ protected:
 
     std::unique_ptr<render::gl::ShaderProgram> m_program;
     std::unique_ptr<render::gl::VertexArrayObject> m_vertexArray;
+    std::unique_ptr<render::gl::FrameBufferObject> m_offscreenFBO;
 
     std::unique_ptr<render::gl::TextureDrawer> m_textureDrawer;
     std::shared_ptr<VideoFrame> m_backgroundFrame;

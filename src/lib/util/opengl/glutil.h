@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "util_global.h"
 #include <QOpenGLExtraFunctions>
-#include <memory>
 
 class UTIL_EXPORT OpenGLBase {
 public:

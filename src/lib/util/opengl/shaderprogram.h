@@ -1,11 +1,10 @@
 ﻿#pragma once
 #include "glutil.h"
-#include <memory>
 
 namespace render::gl {
 class UTIL_EXPORT ShaderProgram : public OpenGLBase {
 public:
-    ShaderProgram() = default;
+    using OpenGLBase::OpenGLBase;
     ~ShaderProgram();
     bool createProgram(const char* vertex_shader, const char* fragment_shader);
     bool createProgram(QString vertexFile, QString fragmentFile);

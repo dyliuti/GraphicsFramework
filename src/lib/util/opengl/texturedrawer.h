@@ -23,7 +23,6 @@ private:
 
 private:
     std::unique_ptr<ShaderProgram> m_program;
-    // GLuint m_vao = 0;
     QOpenGLVertexArrayObject m_vao;
     GLuint m_vbos[2] = { 0 };
 };

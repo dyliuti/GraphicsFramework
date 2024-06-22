@@ -28,28 +28,30 @@ void render::gl::Texture::genTexture(const QImage &image)
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrapMode);
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrapMode);
 
-    auto glFormat = convertQImageFormatToGL(image);
-    m_gl->glTexImage2D(GL_TEXTURE_2D, 0, glFormat, image.width(), image.height(), 0, glFormat, GL_UNSIGNED_BYTE, image.bits());
+    qInfo() << "ori image format: " << image.format();
+    GLuint glFormat;
+    const auto& img = convertQImageFormatToGL(image, glFormat);
+    qInfo() << "image gl format: " << glFormat << img.width() << img.height();
+    m_gl->glTexImage2D(GL_TEXTURE_2D, 0, glFormat, image.width(), image.height(), 0, glFormat, GL_UNSIGNED_BYTE, img.bits());
     if(m_mipmapEnable) {
         m_gl->glGenerateMipmap(GL_TEXTURE_2D);
     }
     m_gl->glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-GLint render::gl::Texture::convertQImageFormatToGL(const QImage &image) {
-    GLint format = GL_RGBA;
+QImage render::gl::Texture::convertQImageFormatToGL(const QImage &image, GLuint& glFormat) {
     switch (image.format()) {
     case QImage::Format_RGB32:
+    //case QImage::Format_ARGB32:
     case QImage::Format_RGBA8888:
     case QImage::Format_RGBA8888_Premultiplied:
-        format = GL_RGBA;
-        break;
+        glFormat = GL_RGBA;
+        return std::move(image);
     case QImage::Format_RGB888:
-        format = GL_RGB;
-        break;
+        glFormat = GL_RGB;
+        return std::move(image);
     default:
-        format = GL_RGB;
+        glFormat = GL_RGBA;
+        return image.convertToFormat(QImage::Format_RGBA8888);
     }
-
-    return format;
 }
