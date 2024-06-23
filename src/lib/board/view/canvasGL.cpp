@@ -124,5 +124,5 @@ void CanvasGL::paintGL()
 void CanvasGL::resizeEvent(QResizeEvent* event)
 {
     // if use QWidget::resizeEvent(event) -> unexpected behavior
-    QWidget::resizeEvent(event);
+    QOpenGLWidget::resizeEvent(event);
 }
