@@ -2,6 +2,7 @@
 #define FRAMEBUFFEROBJECT_H
 
 #include "glutil.h"
+#include <QColor>
 
 namespace render::gl {
 class Texture;
@@ -22,6 +23,7 @@ protected:
 protected:
     GLuint m_framebufferId = 0;
     std::shared_ptr<Texture> m_texture;
+    QColor m_color;
 };
 }
 #endif // FRAMEBUFFEROBJECT_H

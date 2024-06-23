@@ -9,38 +9,9 @@
 #include "opengl/vertexarrayobject.h"
 #include "opengl/framebufferobject.h"
 
-// Shaders
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-"layout (location = 2) in vec2 texCoord;\n"
-
-"out vec3 ourColor;\n"
-"out vec2 TexCoord;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position, 1.0f);\n"
-"ourColor = color;\n"
-"TexCoord = vec2(texCoord.x * 2,  (1.0 - texCoord.y) * 2);\n"
-"}\0";
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"in vec3 ourColor;\n"
-"in vec2 TexCoord;\n"
-
-"out vec4 color;\n"
-
-"uniform float mixValue;\n"
-"uniform sampler2D ourTexture1;\n"
-"uniform sampler2D ourTexture2;\n"
-"void main()\n"
-"{\n"
-"color = mix(texture(ourTexture1, TexCoord) * vec4(ourColor, 1.0f), texture(ourTexture2, TexCoord), mixValue);\n"
-"}\n\0";
-
 using namespace render::gl;
 CanvasGLSync2::CanvasGLSync2(QWidget* parent)
-    : QOpenGLWidget(parent) /*,
-       QOpenGLFunctions(&m_glContext)*/
+    : QOpenGLWidget(parent)
 {
     QSurfaceFormat format;
     format.setMajorVersion(3);
@@ -50,7 +21,7 @@ CanvasGLSync2::CanvasGLSync2(QWidget* parent)
     m_glContext.setFormat(format);
     if (!m_glContext.create()) {
         qInfo() << "gl context create error";
-        //throw std::runtime_error("context creation failed");
+        assert(false);
     }
 
     m_offscreenSurface.setFormat(m_glContext.format());
@@ -90,55 +61,6 @@ std::shared_ptr<VideoFrame> CanvasGLSync2::generateVideoFrame(QString filePath)
     auto texture = std::make_shared<render::gl::Texture>(image);
 
     return std::make_shared<VideoFrame>(texture, image.width(), image.height());
-}
-
-std::shared_ptr<VideoFrame> CanvasGLSync2::generateVideoFrame(int width, int height)
-{
-    auto texture = std::make_shared<render::gl::Texture>("");
-//    GLuint textureId;
-//    glGenTextures(1, &textureId);
-//    texture->createNew();
-//    qInfo() << "gl error: " << glGetError();
-//    glBindTexture(GL_TEXTURE_2D, texture->textureId());
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-//    glBindTexture(GL_TEXTURE_2D, 0);
-
-    return std::make_shared<VideoFrame>(texture, width, height);
-}
-
-std::shared_ptr<VideoFrame> CanvasGLSync2::generateVideoFrame(int width, int height, QColor color)
-{
-    auto videoFrame = generateVideoFrame(width, height);
-    GLuint frameBuffer;
-    glGenFramebuffers(1, &frameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, videoFrame->texture->textureId(), 0);
-    glClearColor(1, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glDeleteFramebuffers(1, &frameBuffer);
-
-    return videoFrame;
-}
-
-std::shared_ptr<VideoFrame> CanvasGLSync2::generateBackgroundVideoFrame()
-{
-    const int kWidth = 720;
-    const int kHeight = 1280;
-    auto videoFrame = generateVideoFrame("C:/Work/GraphicsFramework/resource/model/facemodel.png"); /*preview_background*/
-    auto backgroundFrame = generateVideoFrame(kWidth, kHeight);
-
-    //    GLuint frameBuffer;
-    //    glGenFramebuffers(1, &frameBuffer);
-    //    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, backgroundFrame->texture->textureId(), 0);
-    ViewPort viewPort(backgroundFrame->width, backgroundFrame->height, DisplayLayout::kLayoutAspectFill);
-    m_textureDrawer->drawTexture(videoFrame, viewPort, true);
-
-    //    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    //    glDeleteFramebuffers(1, &frameBuffer);
-
-    return backgroundFrame;
 }
 
 void CanvasGLSync2::initializeGL()
@@ -183,6 +105,7 @@ void CanvasGLSync2::initializeGL()
 
     // Load and create a texture
     auto texture = std::make_shared<render::gl::Texture>("D:/Work/GraphicsFramework/resource/model/facemodel.png");
+//    auto texture = std::make_shared<render::gl::Texture>(QColor(0, 0, 255), 720, 1280);
     m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
     m_offscreenFBO->bind();
     m_offscreenFBO->attachTexture();

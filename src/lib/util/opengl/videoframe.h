@@ -37,5 +37,4 @@ public:
     std::shared_ptr<render::gl::Texture> texture;
     uint32_t width;
     uint64_t height;
-    std::shared_ptr<uint8_t> data;
 };

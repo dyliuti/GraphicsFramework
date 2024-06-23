@@ -1,5 +1,6 @@
 #include "framebufferobject.h"
 #include "texture.h"
+#include <QDebug>
 
 render::gl::FrameBufferObject::FrameBufferObject(std::shared_ptr<Texture> texture) : OpenGLBase(),
     m_texture(texture)
