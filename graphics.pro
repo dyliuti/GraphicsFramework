@@ -1,5 +1,8 @@
 TEMPLATE = subdirs
 
+SUBDIRS += src/lib/util
+pro_file = $$PWD/src/lib/util/util.pro
+
 SUBDIRS += src/lib/qmlPlugin
 pro_file = $$PWD/src/lib/qmlPlugin/qmlPlugin.pro
 
@@ -8,9 +11,6 @@ pro_file = $$PWD/src/lib/widget/widget.pro
 
 SUBDIRS += src/lib/board
 pro_file = $$PWD/src/lib/board/board.pro
-
-SUBDIRS += src/lib/util
-pro_file = $$PWD/src/lib/util/util.pro
 
 SUBDIRS += src/main
 pro_file = $$PWD/src/main.pro

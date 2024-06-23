@@ -6,16 +6,14 @@
 #define CANVAS_GL_SYNC2_H
 
 #include "board_global.h"
-#include "opengl/texturedrawer.h"
 #include <QOpenGLExtraFunctions>
 #include <QOpenGLWidget>
 #include <QTimer>
-#include <QWidget>
-#include <QOffscreenSurface>
 
 struct VideoFrame;
 namespace render::gl {
     class FrameBufferObject;
+    class TextureDrawer;
 }
 class BOARD_EXPORT CanvasGLSync : public QOpenGLWidget, protected QOpenGLExtraFunctions {
     Q_OBJECT
@@ -32,9 +30,6 @@ protected:
 
 protected:
     QTimer m_timer;
-    QOpenGLContext m_glContext;
-    QOffscreenSurface m_offscreenSurface;
-
     std::unique_ptr<render::gl::FrameBufferObject> m_offscreenFBO;
     std::unique_ptr<render::gl::TextureDrawer> m_textureDrawer;
 };

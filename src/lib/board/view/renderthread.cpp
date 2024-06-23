@@ -6,15 +6,17 @@ RenderThread::RenderThread(QOpenGLWidget* sharedWidget) {
     this->moveToThread(m_thread);
 
     connect(m_thread, &QThread::finished, this, &QThread::deleteLater);
-    connect(this, &RenderThread::triggerRun, this, &RenderThread::run, Qt::QueuedConnection);
-    connect(this, &RenderThread::triggerRunSync, this, &RenderThread::syncRunTask, Qt::BlockingQueuedConnection);
+    connect(this, &RenderThread::triggerRun, this, &RenderThread::onRun, Qt::QueuedConnection);
+    connect(this, &RenderThread::triggerRunSync, this, &RenderThread::onSyncRunTask, Qt::BlockingQueuedConnection);
 
     auto sharedContext = sharedWidget->context();
     m_glContext = new QOpenGLContext();
     m_glContext->setShareContext(sharedContext);
+    m_glContext->setFormat(QSurfaceFormat::defaultFormat());
     m_glContext->create();
     m_glContext->moveToThread(m_thread);
 
+    qInfo() << "surface format: " << sharedContext->format();
     m_surface.setFormat(QSurfaceFormat::defaultFormat());
     m_surface.create();
     m_surface.moveToThread(m_thread);
@@ -43,29 +45,7 @@ void RenderThread::join(bool dropPendingTasks) {
     }
 }
 
-void RenderThread::run() {
-    m_runningMutex.lock();
-    m_isRunning = true;
-    m_runningMutex.unlock();
 
-    makeCurrent();
-    runAllTasks();
-    doneCurrent();
-
-    m_runningMutex.lock();
-    m_isRunning = false;
-    m_runningMutex.unlock();
-}
-
-void RenderThread::syncRunTask() {
-    if (m_syncRunFunc) {
-        makeCurrent();
-        runAllTasks();
-        m_syncRunFunc();
-        doneCurrent();
-        m_syncRunFunc = nullptr;
-    }
-}
 
 void RenderThread::runOnRenderThread(Task&& task) {
     appendTask(task);
@@ -85,6 +65,30 @@ void RenderThread::syncRunOnRenderThread(std::function<void()> func) {
     assert(m_syncRunFunc == nullptr);
 }
 
+void RenderThread::onRun() {
+    m_runningMutex.lock();
+    m_isRunning = true;
+    m_runningMutex.unlock();
+
+    makeCurrent();
+    runAllTasks();
+    doneCurrent();
+
+    m_runningMutex.lock();
+    m_isRunning = false;
+    m_runningMutex.unlock();
+}
+
+void RenderThread::onSyncRunTask() {
+    if (m_syncRunFunc) {
+        makeCurrent();
+        runAllTasks();
+        m_syncRunFunc();
+        doneCurrent();
+        m_syncRunFunc = nullptr;
+    }
+}
+
 void RenderThread::dropAllTasks() {
     std::lock_guard<std::mutex> lockGuard(m_tasksMutex);
     m_tasksOnRenderThread.clear();
@@ -98,13 +102,12 @@ void RenderThread::runAllTasks() {
         m_tasksOnRenderThread.clear();
     }
 
+    qInfo() << "render task size: " << tasksOnRenderThread.size();
     for (const auto& task : tasksOnRenderThread) {
         if (task.func) {
             task.func();
-        } /*else if (task.taskPtr && *task.taskPtr) {
-            (*task.taskPtr)();
-        }*/
-        //  assert(m_tasksOnRenderThread.size() < 100);
+        }
+        // assert(m_tasksOnRenderThread.size() < 100);
     }
 }
 
@@ -112,7 +115,7 @@ void RenderThread::appendTask(const Task& task) {
     std::lock_guard<std::mutex> lockGuard(m_tasksMutex);
     bool bExist = false;
     for (const auto& renderTask : m_tasksOnRenderThread) {
-        if (task.id == renderTask.id && task.id == 1) {
+        if (task.id == renderTask.id && task.id == CanvasRender) {
             bExist = true;
             break;
         }

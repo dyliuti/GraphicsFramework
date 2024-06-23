@@ -24,3 +24,8 @@ GLuint render::gl::FrameBufferObject::textureId()
 {
     return m_texture->textureId();
 }
+
+GLuint render::gl::FrameBufferObject::fboId()
+{
+    return m_framebufferId;
+}

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "glutil.h"
-#include "videoframe.h"
 #include <memory>
 
 namespace render::gl {

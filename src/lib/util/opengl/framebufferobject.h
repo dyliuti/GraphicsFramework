@@ -16,6 +16,7 @@ public:
     void destory();
     void attachTexture();
     GLuint textureId();
+    GLuint fboId();
 
 protected:
     GLuint m_framebufferId = 0;

@@ -1,24 +1,13 @@
 ﻿#include "CanvasGLSync.h"
 #include <QDebug>
+#include "opengl/texturedrawer.h"
 #include "opengl/framebufferobject.h"
 
 using namespace render::gl;
 CanvasGLSync::CanvasGLSync(QWidget* parent)
     : QOpenGLWidget(parent)
 {
-    QSurfaceFormat format;
-    format.setMajorVersion(3);
-    format.setMinorVersion(3);
-    format.setProfile(QSurfaceFormat::CoreProfile);
 
-    m_glContext.setFormat(format);
-    if (!m_glContext.create()) {
-        qInfo() << "gl context create error";
-        assert(false);
-    }
-
-    m_offscreenSurface.setFormat(m_glContext.format());
-    m_offscreenSurface.create();
 }
 
 CanvasGLSync::~CanvasGLSync()
@@ -46,6 +35,12 @@ void CanvasGLSync::initializeGL()
 {
     qInfo() << "gl initializeGL: ";
     initializeOpenGLFunctions();
+    QSurfaceFormat format;
+    format.setMajorVersion(3);
+    format.setMinorVersion(3);
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    QOpenGLContext::currentContext()->setFormat(format);
+
     m_textureDrawer = std::make_unique<render::gl::TextureDrawer>();
 
     // Load and create a texture

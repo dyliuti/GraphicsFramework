@@ -9,7 +9,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
-#include "boarddefine.h"
+#include "board_global.h"
 
 class BOARD_EXPORT RenderThread : public QObject {
     Q_OBJECT
@@ -21,9 +21,8 @@ class BOARD_EXPORT RenderThread : public QObject {
         CanvasRender
     };
     struct Task {
-        //std::shared_ptr<std::function<void()>> taskPtr;
         std::function<void()> func;
-        int id = 0;
+        RenderType id = TaskRender;
 
         bool operator<(const Task& b) {
             return this->id < b.id;
@@ -51,7 +50,7 @@ class BOARD_EXPORT RenderThread : public QObject {
 
     template <class T>
     inline void runOnRenderThread(T&& func, RenderType id = TaskRender) {
-        runOnRenderThread(makeTask(func, id));
+        runOnRenderThread(makeTask(std::forward<T>(func), id));
     }
 
     void runOnRenderThread(Task&& task);
@@ -66,8 +65,8 @@ class BOARD_EXPORT RenderThread : public QObject {
     void appendTask(const Task& task);
 
    protected slots:
-    void run();
-    void syncRunTask();
+    void onRun();
+    void onSyncRunTask();
 
    signals:
     void triggerRun();

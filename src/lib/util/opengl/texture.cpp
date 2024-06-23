@@ -29,7 +29,7 @@ render::gl::Texture::Texture(const QImage &image)
 render::gl::Texture::Texture(QImage &&image)
     : OpenGLBase(), m_width(image.width()), m_height(image.height())
 {
-    genTexture(std::move(image));
+    genTexture(image);
 }
 
 render::gl::Texture::~Texture()
