@@ -136,7 +136,7 @@ void CanvasGL::generateBackgroundVideoFrame()
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_backgroundFrame->texture->textureId(), 0);
     ViewPort viewPort(m_backgroundFrame->width, m_backgroundFrame->height, DisplayLayout::kLayoutAspectFill);
-    m_textureDrawer->drawTexture(videoFrame, viewPort, true);
+    //m_textureDrawer->drawTexture(videoFrame, viewPort, true);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDeleteFramebuffers(1, &frameBuffer);
@@ -202,7 +202,7 @@ void CanvasGL::paintGL()
     if (!m_backgroundFrame) {
         generateBackgroundVideoFrame();
     }
-    m_textureDrawer->drawTexture(m_backgroundFrame, viewPort, false);
+    //m_textureDrawer->drawTexture(m_backgroundFrame, viewPort, false);
     //    glDisable(GL_DEPTH_TEST);
     //    glEnable(GL_BLEND);
     //    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);

@@ -15,10 +15,7 @@ public:
     void release() {m_gl->glBindFramebuffer(GL_FRAMEBUFFER, 0);}
     void destory();
     void attachTexture();
-    GLuint texture();
-
-protected:
-
+    GLuint textureId();
 
 protected:
     GLuint m_framebufferId = 0;

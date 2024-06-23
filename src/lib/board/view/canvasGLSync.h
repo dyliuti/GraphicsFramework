@@ -2,20 +2,21 @@
 // Created by yanminwei on 2024/4/20.
 //
 
-#ifndef CANVAS_GL_SYNC_H
-#define CANVAS_GL_SYNC_H
+#ifndef CANVAS_GL_SYNC2_H
+#define CANVAS_GL_SYNC2_H
 
 #include "board_global.h"
-#include "opengl/glutil.h"
 #include "opengl/texturedrawer.h"
+#include <QOpenGLExtraFunctions>
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <QWidget>
 #include <QOffscreenSurface>
 
-// #include "item/opengl/nanovg/nanovg.h"
-// #include "item/opengl/nanovg/nanovg_gl.h"
 struct VideoFrame;
+namespace render::gl {
+    class FrameBufferObject;
+}
 class BOARD_EXPORT CanvasGLSync : public QOpenGLWidget, protected QOpenGLExtraFunctions {
     Q_OBJECT
 public:
@@ -29,22 +30,12 @@ protected:
     void paintGL() override;
     void resizeEvent(QResizeEvent* event) override;
 
-private:
-    void cleanup();
-    std::shared_ptr<VideoFrame> generateVideoFrame(QString filePath);
-    std::shared_ptr<VideoFrame> generateVideoFrame(int width, int height);
-    std::shared_ptr<VideoFrame> generateVideoFrame(int width, int height, QColor color);
-    std::shared_ptr<VideoFrame> generateBackgroundVideoFrame();
-
 protected:
     QTimer m_timer;
     QOpenGLContext m_glContext;
     QOffscreenSurface m_offscreenSurface;
-    // NVGcontext* m_vg = nullptr;
 
+    std::unique_ptr<render::gl::FrameBufferObject> m_offscreenFBO;
     std::unique_ptr<render::gl::TextureDrawer> m_textureDrawer;
-    std::shared_ptr<VideoFrame> m_backgroundFrame;
-    std::shared_ptr<VideoFrame> m_inputFrame;
-    std::shared_ptr<VideoFrame> m_outputFrame;
 };
 #endif // CANVAS_GL_SYNC_H

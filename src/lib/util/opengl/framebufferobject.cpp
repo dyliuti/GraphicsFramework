@@ -20,7 +20,7 @@ void render::gl::FrameBufferObject::attachTexture()
     m_gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture->textureId(), 0);
 }
 
-GLuint render::gl::FrameBufferObject::texture()
+GLuint render::gl::FrameBufferObject::textureId()
 {
     return m_texture->textureId();
 }
