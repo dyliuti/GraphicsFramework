@@ -2,6 +2,9 @@
 #include "view/canvasGL.h"
 #include "view/canvasGLSync.h"
 #include <QApplication>
+#include <QMatrix>
+#include <QMatrix4x4>
+#include <QDebug>
 
 int main(int argc, char* argv[])
 {
@@ -11,6 +14,7 @@ int main(int argc, char* argv[])
     format.setMinorVersion(3);
     format.setProfile(QSurfaceFormat::CoreProfile);
     QSurfaceFormat::setDefaultFormat(format);
+
 
     CanvasGL canvas;
     canvas.show();

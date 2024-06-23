@@ -14,6 +14,8 @@ public:
     void setWrapMode(GLint wrapMode) {m_wrapMode = wrapMode;}
     void setFilterMode(GLint filterMode) {m_filterMode = filterMode;}
     GLuint textureId() { return m_textureId;}
+    int width() {return m_width;}
+    int height() {return m_height;}
 
     void release()
     {

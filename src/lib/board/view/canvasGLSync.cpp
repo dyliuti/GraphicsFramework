@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "opengl/texturedrawer.h"
 #include "opengl/framebufferobject.h"
+#include "opengl/texture.h"
 
 using namespace render::gl;
 CanvasGLSync::CanvasGLSync(QWidget* parent)

@@ -25,6 +25,7 @@ public:
 
     void runOnRenderThread(std::function<void()> func);
     void syncRunOnRenderThread(std::function<void()> func);
+    void grabImage();
 
 protected slots:
     void onRenderCanvas();
@@ -36,7 +37,7 @@ protected:
     void initializeGL() override;
     void paintGL() override;
     void resizeEvent(QResizeEvent* event) override;
-
+    void mousePressEvent(QMouseEvent* event) override;
 
 protected:
     QTimer m_timer;

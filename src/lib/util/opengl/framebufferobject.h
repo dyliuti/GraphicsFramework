@@ -15,6 +15,7 @@ public:
     void release() {m_gl->glBindFramebuffer(GL_FRAMEBUFFER, 0);}
     void destory();
     void attachTexture();
+    std::shared_ptr<Texture> texture() {return m_texture;}
     GLuint textureId();
     GLuint fboId();
 

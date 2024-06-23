@@ -1,8 +1,10 @@
 ﻿#include "canvasGL.h"
 #include "opengl/texturedrawer.h"
 #include "opengl/framebufferobject.h"
+#include "opengl/texture.h"
 #include <QDateTime>
 #include <QDebug>
+#include <QMatrix4x4>
 
 using namespace render::gl;
 
@@ -43,6 +45,21 @@ void CanvasGL::syncRunOnRenderThread(std::function<void()> func)
     if (m_renderThread) {
         m_renderThread->syncRunOnRenderThread(func);
     }
+}
+static void cleanImageData(void* data) {
+    free(data);
+}
+static int s_rot = 0;
+void CanvasGL::grabImage()
+{
+    syncRunOnRenderThread([&](){
+        auto texture = m_offscreenFBO->texture();
+        GLubyte* pixels = (GLubyte*)malloc(texture->width() * texture->height() * sizeof(GLubyte) * 4);
+        glReadPixels(0, 0, texture->width(), texture->height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+        QImage image(pixels, texture->width(), texture->height(), QImage::Format_RGBA8888, &cleanImageData);
+        image.save(QString("D:/Work/GraphicsFramework/resource/shader/img%1.png").arg(s_rot));
+    });
 }
 
 void CanvasGL::onRenderCanvas()
@@ -91,6 +108,14 @@ void CanvasGL::initializeGL()
     });
 
     setRenderFunction([&]() {
+        QMatrix matrix;
+        qInfo() << matrix;
+        matrix.rotate((s_rot++)%360);
+        qInfo() << matrix;
+        QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
+        m_textureDrawer->setRotateMatrix(rotateMatrix);
+        m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
+
         //        auto now = std::chrono::system_clock::now();
         //        auto duration = now.time_since_epoch();
         //        uint64_t ptsInMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
@@ -125,4 +150,10 @@ void CanvasGL::resizeEvent(QResizeEvent* event)
 {
     // if use QWidget::resizeEvent(event) -> unexpected behavior
     QOpenGLWidget::resizeEvent(event);
+}
+
+void CanvasGL::mousePressEvent(QMouseEvent *event)
+{
+    grabImage();
+    QOpenGLWidget::mousePressEvent(event);
 }

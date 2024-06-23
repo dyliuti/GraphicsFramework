@@ -3,7 +3,8 @@
 #include "vertexarrayobject.h"
 #include "buffer.h"
 #include <QDebug>
-
+#include <QMatrix4x4>
+#include <QMatrix>
 namespace render::gl {
 
 //GLfloat vertices[] = {
@@ -60,6 +61,7 @@ TextureDrawer::~TextureDrawer()
 
 void TextureDrawer::drawTexture(GLuint textureId)
 {
+    m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());
     // Bind Texture
     m_gl->glActiveTexture(GL_TEXTURE0);
     m_gl->glBindTexture(GL_TEXTURE_2D, textureId);
