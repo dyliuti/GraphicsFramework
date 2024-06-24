@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "util_global.h"
+#include "render_global.h"
 #include <memory>
 namespace render::gl {
 
@@ -11,7 +11,7 @@ enum DisplayLayout {
     kLayoutAspectFill
 };
 
-struct UTIL_EXPORT ViewPort {
+struct RENDER_EXPORT ViewPort {
     ViewPort(uint32_t w, uint32_t h)
         : width(w)
         , height(h)
@@ -71,7 +71,8 @@ struct UTIL_EXPORT ViewPort {
     uint32_t positionY = 0;
     uint32_t width = 0;
     uint32_t height = 0;
-    bool isBoundingSize = false;
+
     DisplayLayout displayLayout = DisplayLayout::kLayoutAspectFit;
+    bool isBoundingSize = false;
 };
 } // namespace render::gl

@@ -1,11 +1,10 @@
 ﻿#ifndef IMAGEUTIL_H
 #define IMAGEUTIL_H
-#include <QObject>
+#include "util_global.h"
 #include <QImage>
+#include <QObject>
 
-
-class ImageUtil : public QObject
-{
+class UTIL_EXPORT ImageUtil : public QObject {
     Q_OBJECT
 
 public:
@@ -15,7 +14,7 @@ public:
      * 从文件中加载文件
      * strFileName : 文件的路径
      * convertSRGBToRGB : 是否从SRGB转换成RGB，QImage无法保存SRGB的图片
-    */
+     */
     static QImage loadFromFile(const QString& strFilePath, bool convertColorSpaceToRGB = true);
 
     /*
@@ -36,28 +35,28 @@ public:
     static Q_INVOKABLE bool isValidPngFile(const QString& strFilePath);
 
     /*
-    * 去除多余的png后缀
-    */
+     * 去除多余的png后缀
+     */
     static QString removeRedundancePngSuffix(const QString& strFileName);
 
     /*
      * 重命名图片的前缀，将图将图片从 aaa_000.png 重命名为 bbb_000.png
-    */
+     */
     static bool renameImage(const QString& strImagePath, const QString& strNewPrefix);
 
     /*
      * 重命名图片文件夹下的文件前缀，图片中的aaa_000.png，重命名为bbb_000.png
-    */
+     */
     static bool renameImagesInDir(const QString& strDirPath, const QString& strNewPrefix);
 
     /*
      * 重命名图片，替换名字中的字符串
-    */
+     */
     static bool renameImage(const QString& strImagePath, const QString& strBefore, const QString& strAfter);
 
     /*
      * 重命名文件夹中的图片，替换名字中的字符串
-    */
+     */
     static bool renameImagesInDir(const QString& strDirPath, const QString& strBefore, const QString& strAfter);
 
     /*
@@ -74,18 +73,17 @@ public:
      * 从文件中加载图片
      * strFileName : 文件的路径
      * convertSRGBToRGB : 是否从SRGB转换成RGB
-    */
+     */
     static void updateTextureColorSpace(const QString& filePath, bool convertToSRGB = true);
     /*
      * 从文件中读取图片的像素值
      * strFileName : 文件的路径
      * convertSRGBToRGB : 是否从SRGB转换成RGB，QImage无法保存SRGB的图片
-    */
+     */
     static std::vector<unsigned char> readTextureFromFile(const QString& filePath);
 };
 
-class ImageUtil::PNGManager
-{
+class ImageUtil::PNGManager {
 public:
     explicit PNGManager(const QString& png_path);
     ~PNGManager();
@@ -100,7 +98,7 @@ public:
     bool loadSuccess() const { return m_loadSuccess; }
 
 private:
-    //void init();
+    // void init();
 
 private:
     QString m_pngPath;

@@ -1,13 +1,16 @@
-﻿#include "CanvasGLSync.h"
+﻿#include "canvasGLSync.h"
 #include "opengl/framebufferobject.h"
 #include "opengl/texture.h"
 #include "opengl/texturedrawer.h"
+// #include "resource.h"
 #include <QDebug>
+#include <QMatrix4x4>
 
 using namespace render::gl;
 CanvasGLSync::CanvasGLSync(QWidget* parent)
     : QOpenGLWidget(parent)
 {
+    // Resource::registeResource();
 }
 
 CanvasGLSync::~CanvasGLSync()
@@ -40,11 +43,13 @@ void CanvasGLSync::initializeGL()
     m_textureDrawer = std::make_unique<render::gl::TextureDrawer>();
 
     // Load and create a texture
-    auto texture = std::make_shared<render::gl::Texture>("D:/Work/GraphicsFramework/resource/model/facemodel.png");
-    // auto texture = std::make_shared<render::gl::Texture>(QColor(0, 0, 255), 720, 1280);
+    auto texture = std::make_shared<render::gl::Texture>(m_texturePath);
+    // auto texture = std::make_shared<render::gl::Texture>("C:/Work/GraphicsFramework/src/resource/model/facemodel.png");
+    //  auto texture = std::make_shared<render::gl::Texture>(QColor(0, 0, 255), 720, 1280);
     m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
     m_offscreenFBO->bind();
     m_offscreenFBO->attachTexture();
+    m_textureDrawer->drawTexture(texture->textureId());
     m_offscreenFBO->release();
 }
 
@@ -58,6 +63,7 @@ void CanvasGLSync::paintGL()
     //    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     //    glClear(GL_COLOR_BUFFER_BIT);
 
+    m_textureDrawer->setRotateMatrix(QMatrix4x4());
     m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
 
     //    nvgBeginPath(m_vg);

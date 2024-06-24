@@ -6,7 +6,7 @@
 namespace render::gl {
 class VertexArrayObject;
 class ShaderProgram;
-class UTIL_EXPORT TextureDrawer : public OpenGLBase {
+class RENDER_EXPORT TextureDrawer : public OpenGLBase {
 public:
     TextureDrawer();
     ~TextureDrawer();

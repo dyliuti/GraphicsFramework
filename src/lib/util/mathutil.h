@@ -1,10 +1,10 @@
 ﻿#ifndef MATHUTIL_H
 #define MATHUTIL_H
+#include "util_global.h"
 #include <QPointF>
 #include <QRectF>
 
-class MathUtil
-{
+class UTIL_EXPORT MathUtil {
 public:
     // 比较double值， d1<d2返回-1,  d1==d2返回0,  d1>d2返回1
     static int compare(double d1, double d2, double dEsp = 1e-6);

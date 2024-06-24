@@ -4,7 +4,7 @@
 #include <memory>
 
 namespace render::gl {
-class UTIL_EXPORT TextureLoader : public OpenGLBase {
+class RENDER_EXPORT TextureLoader : public OpenGLBase {
 public:
     using OpenGLBase::OpenGLBase;
 

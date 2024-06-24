@@ -33,4 +33,5 @@
         <file>resource/graph/star_cursor.png</file>
         <file>resource/graph/undoIcon.png</file>
     </qresource>
+    <qresource prefix="/model"/>
 </RCC>

@@ -2,7 +2,7 @@
 #include "glutil.h"
 
 namespace render::gl {
-class UTIL_EXPORT ShaderProgram : public OpenGLBase {
+class RENDER_EXPORT ShaderProgram : public OpenGLBase {
 public:
     using OpenGLBase::OpenGLBase;
     ~ShaderProgram();

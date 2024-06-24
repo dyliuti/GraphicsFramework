@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "util_global.h"
+#include "render_global.h"
 #include <QOpenGLExtraFunctions>
 
-class UTIL_EXPORT OpenGLBase {
+class RENDER_EXPORT OpenGLBase {
 public:
     OpenGLBase()
     {

@@ -31,7 +31,7 @@ TextureDrawer::TextureDrawer()
     : OpenGLBase()
 {
     m_program = std::make_unique<render::gl::ShaderProgram>();
-    m_program->createProgram(QString(":/common/shader/model.vs"), QString(":/common/shader/model.frag"));
+    m_program->createProgram(QString(":/common/resource/shader/model.vert"), QString(":/common/resource/shader/model.frag"));
 
     m_vertexArray = std::make_unique<VertexArrayObject>();
     m_vertexArray->bind();
@@ -73,7 +73,7 @@ void TextureDrawer::drawTexture(GLuint textureId)
     m_vertexArray->release();
 }
 
-void TextureDrawer::setRotateMatrix(const QMatrix4x4 &matrix)
+void TextureDrawer::setRotateMatrix(const QMatrix4x4& matrix)
 {
     m_rotateMatrix = matrix;
     m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());

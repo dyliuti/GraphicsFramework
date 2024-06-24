@@ -3,19 +3,19 @@
 #include <QImage>
 
 namespace render::gl {
-class UTIL_EXPORT Texture : public OpenGLBase {
+class RENDER_EXPORT Texture : public OpenGLBase {
 public:
     Texture(const QColor& color, int width, int height, QImage::Format format = QImage::Format_RGBA8888);
     Texture(QString imagePath);
     Texture(const QImage& image);
     Texture(QImage&& image);
     virtual ~Texture();
-    void setMipmapEnable(bool enable) {m_mipmapEnable = enable;}
-    void setWrapMode(GLint wrapMode) {m_wrapMode = wrapMode;}
-    void setFilterMode(GLint filterMode) {m_filterMode = filterMode;}
-    GLuint textureId() { return m_textureId;}
-    int width() {return m_width;}
-    int height() {return m_height;}
+    void setMipmapEnable(bool enable) { m_mipmapEnable = enable; }
+    void setWrapMode(GLint wrapMode) { m_wrapMode = wrapMode; }
+    void setFilterMode(GLint filterMode) { m_filterMode = filterMode; }
+    GLuint textureId() { return m_textureId; }
+    int width() { return m_width; }
+    int height() { return m_height; }
 
     void release()
     {
@@ -33,7 +33,7 @@ private:
     GLuint m_textureId = 0;
     int m_width = 0;
     int m_height = 0;
-    GLint m_wrapMode = GL_MIRRORED_REPEAT; //GL_REPEAT;
+    GLint m_wrapMode = GL_MIRRORED_REPEAT; // GL_REPEAT;
     GLint m_filterMode = GL_LINEAR;
     bool m_mipmapEnable = false;
 };

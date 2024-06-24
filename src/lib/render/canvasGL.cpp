@@ -1,4 +1,5 @@
 ﻿#include "canvasGL.h"
+#include "fileutil.h"
 #include "opengl/framebufferobject.h"
 #include "opengl/texture.h"
 #include "opengl/texturedrawer.h"
@@ -6,7 +7,7 @@
 #include <QDebug>
 #include <QMatrix4x4>
 #include <QStandardPaths>
-#include "fileutil.h"
+#include <QUrl>
 
 using namespace render::gl;
 
@@ -52,6 +53,7 @@ static void cleanImageData(void* data)
 {
     free(data);
 }
+
 static int s_rot = 0;
 void CanvasGL::grabImage()
 {
@@ -103,14 +105,13 @@ void CanvasGL::initializeGL()
 
     m_renderThread = new RenderThread(this);
     m_renderThread->syncRunOnRenderThread([&]() {
-        qInfo() << "111111";
-        auto texture = std::make_shared<render::gl::Texture>(":/model/model/facemodel.png");
+        auto texture = std::make_shared<render::gl::Texture>(m_texturePath);
         // auto texture = std::make_shared<render::gl::Texture>(QColor(0, 0, 255), 720, 1280);
         m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
         m_offscreenFBO->bind();
         m_offscreenFBO->attachTexture();
+        m_textureDrawer->drawTexture(texture->textureId());
         m_offscreenFBO->release();
-
     });
 
     setRenderFunction([&]() {
@@ -147,9 +148,7 @@ void CanvasGL::paintGL()
 
     glDisable(GL_DEPTH);
     QMatrix matrix;
-    //qInfo() << matrix;
     matrix.rotate((s_rot++) % 360);
-    //qInfo() << matrix;
     matrix.rotate(30);
     QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
     m_textureDrawer->setRotateMatrix(rotateMatrix);

@@ -3,7 +3,7 @@ TEMPLATE = lib
 DEFINES += UTIL_LIBRARY YMW_LIBRARY
 
 ymw += resource
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -14,16 +14,6 @@ HEADERS += \
     imageutil.h \
     jsonutil.h \
     mathutil.h \
-    opengl/buffer.h \
-    opengl/framebufferobject.h \
-    opengl/glutil.h \
-    opengl/shaderprogram.h \
-    opengl/texture.h \
-    opengl/texturedrawer.h \
-    opengl/textureloader.h \
-    opengl/vertexarrayobject.h \
-    opengl/videoframe.h \
-    opengl/viewport.h \
     private/SystemStatusBasePrivate.h \
     singletonmacrodef.h \
     systemstatus.h \
@@ -35,16 +25,6 @@ SOURCES += \
     imageutil.cpp \
     jsonutil.cpp \
     mathutil.cpp \
-    opengl/buffer.cpp \
-    opengl/framebufferobject.cpp \
-    opengl/glutil.cpp \
-    opengl/shaderprogram.cpp \
-    opengl/texture.cpp \
-    opengl/texturedrawer.cpp \
-    opengl/textureloader.cpp \
-    opengl/vertexarrayobject.cpp \
-    opengl/videoframe.cpp \
-    opengl/viewport.cpp \
     private/SystemStatusBasePrivate.cpp \
     systemstatus.cpp \
     util.cpp

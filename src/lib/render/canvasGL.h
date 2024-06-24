@@ -5,7 +5,7 @@
 #ifndef CANVAS_GL_H
 #define CANVAS_GL_H
 
-#include "board_global.h"
+#include "render_global.h"
 #include "renderthread.h"
 #include <QOpenGLExtraFunctions>
 #include <QOpenGLWidget>
@@ -14,14 +14,16 @@
 
 struct VideoFrame;
 namespace render::gl {
-    class FrameBufferObject;
-    class TextureDrawer;
+class FrameBufferObject;
+class TextureDrawer;
 }
-class BOARD_EXPORT CanvasGL : public QOpenGLWidget, protected QOpenGLExtraFunctions {
+
+class RENDER_EXPORT CanvasGL : public QOpenGLWidget, public QOpenGLExtraFunctions {
     Q_OBJECT
 public:
     explicit CanvasGL(QWidget* parent = nullptr);
     virtual ~CanvasGL();
+    void setTexturePath(QString path) { m_texturePath = path; }
 
     void runOnRenderThread(std::function<void()> func);
     void syncRunOnRenderThread(std::function<void()> func);
@@ -44,6 +46,7 @@ protected:
     RenderThread* m_renderThread = nullptr;
     std::function<void()> m_renderFunction;
 
+    QString m_texturePath;
     std::unique_ptr<render::gl::FrameBufferObject> m_offscreenFBO;
     std::unique_ptr<render::gl::TextureDrawer> m_textureDrawer;
 };

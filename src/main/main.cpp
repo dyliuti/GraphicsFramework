@@ -1,11 +1,10 @@
-﻿#include "mainwindow.h"
-#include "view/canvasGL.h"
-#include "view/canvasGLSync.h"
+﻿#include "fileutil.h"
+#include "mainwindow.h"
+#include "previewglwidget.h"
+#include "resource.h"
 #include <QApplication>
-#include <QMatrix>
-#include <QMatrix4x4>
 #include <QDebug>
-
+#include <opengl/texture.h>
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
@@ -14,13 +13,12 @@ int main(int argc, char* argv[])
     format.setMinorVersion(3);
     format.setProfile(QSurfaceFormat::CoreProfile);
     QSurfaceFormat::setDefaultFormat(format);
+    Resource::registerResource();
 
+    PreviewGLWidget glWidget;
+    glWidget.setTexturePath(":/model/model/facemodel.png");
+    glWidget.show();
 
-    CanvasGL canvas;
-    canvas.show();
-
-//    CanvasGLSync syncCanvas;
-//    syncCanvas.show();
     //    MainWindow w;
     //    w.show();
     return a.exec();

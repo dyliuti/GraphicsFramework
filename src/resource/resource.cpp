@@ -1,5 +1,8 @@
-#include "resource.h"
+﻿#include "resource.h"
+#include <QResource>
 
-Resource::Resource()
+void Resource::registerResource()
 {
+    QResource::registerResource(":/image.res");
+    QResource::registerResource(":/shader.res");
 }

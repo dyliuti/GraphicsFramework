@@ -1,6 +1,7 @@
-#ifndef RENDERTHREAD_H
+﻿#ifndef RENDERTHREAD_H
 #define RENDERTHREAD_H
 
+#include "render_global.h"
 #include <QOffscreenSurface>
 #include <QOpenGLContext>
 #include <QOpenGLWidget>
@@ -9,11 +10,10 @@
 #include <functional>
 #include <memory>
 #include <mutex>
-#include "board_global.h"
 
-class BOARD_EXPORT RenderThread : public QObject {
+class RENDER_EXPORT RenderThread : public QObject {
     Q_OBJECT
-   public:
+public:
     explicit RenderThread(QOpenGLWidget* sharedWidget);
     ~RenderThread();
     enum RenderType {
@@ -24,32 +24,36 @@ class BOARD_EXPORT RenderThread : public QObject {
         std::function<void()> func;
         RenderType id = TaskRender;
 
-        bool operator<(const Task& b) {
+        bool operator<(const Task& b)
+        {
             return this->id < b.id;
         };
 
-        bool operator==(const Task& task) {
+        bool operator==(const Task& task)
+        {
             return this->id == task.id;
         };
     };
 
     template <class T>
-    static Task makeTask(T&& func, RenderType id = TaskRender) {
+    static Task makeTask(T&& func, RenderType id = TaskRender)
+    {
         Task t;
         t.id = id;
         t.func = std::forward<T>(func);
-//        typedef typename std::decay<T>::type RealT;
-//        if constexpr (std::is_same_v<RealT, decltype(t.taskPtr)>) {
-//            t.taskPtr = std::forward<T>(func);
-//        } else {
-//            t.task = std::forward<T>(func);
-//        }
+        //        typedef typename std::decay<T>::type RealT;
+        //        if constexpr (std::is_same_v<RealT, decltype(t.taskPtr)>) {
+        //            t.taskPtr = std::forward<T>(func);
+        //        } else {
+        //            t.task = std::forward<T>(func);
+        //        }
 
         return t;
     }
 
     template <class T>
-    inline void runOnRenderThread(T&& func, RenderType id = TaskRender) {
+    inline void runOnRenderThread(T&& func, RenderType id = TaskRender)
+    {
         runOnRenderThread(makeTask(std::forward<T>(func), id));
     }
 
@@ -59,22 +63,22 @@ class BOARD_EXPORT RenderThread : public QObject {
     void doneCurrent();
     void dropAllTasks();
 
-   protected:
+protected:
     void join(bool dropPendingTasks);
     void runAllTasks();
     void appendTask(const Task& task);
 
-   protected slots:
+protected slots:
     void onRun();
     void onSyncRunTask();
 
-   signals:
+signals:
     void triggerRun();
     void triggerRunSync();
 
-   protected:
-    QThread* m_thread{};
-    QOpenGLContext* m_glContext{};
+protected:
+    QThread* m_thread {};
+    QOpenGLContext* m_glContext {};
     QOffscreenSurface m_surface;
     std::function<void()> m_syncRunFunc;
     std::mutex m_tasksMutex;
@@ -84,4 +88,4 @@ class BOARD_EXPORT RenderThread : public QObject {
     bool m_isRunning = false;
 };
 
-#endif  // RENDERTHREAD_H
+#endif // RENDERTHREAD_H

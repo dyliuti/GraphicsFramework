@@ -23,7 +23,7 @@ struct Transform {
     float cropYFrac = 0;
 };
 
-struct UTIL_EXPORT VideoFrame {
+struct RENDER_EXPORT VideoFrame {
 public:
     VideoFrame(std::shared_ptr<render::gl::Texture> tex, uint32_t w, uint32_t h)
         : texture(tex)

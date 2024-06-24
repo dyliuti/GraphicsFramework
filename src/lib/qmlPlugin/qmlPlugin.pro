@@ -27,10 +27,11 @@ unix {
 
 include(../../../framework.pri)
 
-DISTFILES = qmldir
+DISTFILES = qmldir \
+    test.qml
 
-QML_PLUGIN_OUTPUT_DIR = $$shadowed($$QML_PLUGIN_OUTPUT_DIR)/qmlplugin
-message("1111 $$shadowed($$QML_PLUGIN_OUTPUT_DIR)/qmldir")
+QML_PLUGIN_OUTPUT_DIR = $$OUTPUT_PWD/qmlPlugin
+message("1111 $$QML_PLUGIN_OUTPUT_DIR")
 !equals(_PRO_FILE_PWD_, $$QML_PLUGIN_OUTPUT_DIR) {
     copy_qmldir.target = $$QML_PLUGIN_OUTPUT_DIR/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
@@ -40,6 +41,9 @@ message("1111 $$shadowed($$QML_PLUGIN_OUTPUT_DIR)/qmldir")
 }
 
 qmldir.files = qmldir
+RESOURCES += \
+  qml.qrc
+
 unix {
     installPath = $$[QT_INSTALL_QML]/$$replace(uri, \., /)
     qmldir.path = $$installPath
