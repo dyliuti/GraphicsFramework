@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMatrix4x4>
+#include <QStandardPaths>
+#include "fileutil.h"
 
 using namespace render::gl;
 
@@ -53,13 +55,15 @@ static void cleanImageData(void* data)
 static int s_rot = 0;
 void CanvasGL::grabImage()
 {
-    syncRunOnRenderThread([&]() {
+    runOnRenderThread([&]() {
         auto texture = m_offscreenFBO->texture();
         GLubyte* pixels = (GLubyte*)malloc(texture->width() * texture->height() * sizeof(GLubyte) * 4);
         glReadPixels(0, 0, texture->width(), texture->height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
         QImage image(pixels, texture->width(), texture->height(), QImage::Format_RGBA8888, &cleanImageData);
-        image.save(QString("D:/Work/GraphicsFramework/resource/shader/img%1.png").arg(s_rot));
+        auto docDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/graphics";
+        FileUtil::makePath(docDir);
+        image.save(QString("%1/img%2.png").arg(docDir).arg(s_rot));
     });
 }
 
@@ -106,16 +110,15 @@ void CanvasGL::initializeGL()
         m_offscreenFBO->bind();
         m_offscreenFBO->attachTexture();
         m_offscreenFBO->release();
+
     });
 
     setRenderFunction([&]() {
-        QMatrix matrix;
-        //qInfo() << matrix;
-        matrix.rotate((s_rot++) % 360);
-        //qInfo() << matrix;
-        QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
-        m_textureDrawer->setRotateMatrix(rotateMatrix);
-        m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
+        s_rot++;
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(100, 100, 50, 50);
+        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         //        auto now = std::chrono::system_clock::now();
         //        auto duration = now.time_since_epoch();
@@ -143,6 +146,13 @@ void CanvasGL::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDisable(GL_DEPTH);
+    QMatrix matrix;
+    //qInfo() << matrix;
+    matrix.rotate((s_rot++) % 360);
+    //qInfo() << matrix;
+    matrix.rotate(30);
+    QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
+    m_textureDrawer->setRotateMatrix(rotateMatrix);
     m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
 }
 

@@ -61,7 +61,6 @@ TextureDrawer::~TextureDrawer()
 
 void TextureDrawer::drawTexture(GLuint textureId)
 {
-    m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());
     // Bind Texture
     m_gl->glActiveTexture(GL_TEXTURE0);
     m_gl->glBindTexture(GL_TEXTURE_2D, textureId);
@@ -72,6 +71,12 @@ void TextureDrawer::drawTexture(GLuint textureId)
     m_vertexArray->bind();
     m_gl->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     m_vertexArray->release();
+}
+
+void TextureDrawer::setRotateMatrix(const QMatrix4x4 &matrix)
+{
+    m_rotateMatrix = matrix;
+    m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());
 }
 
 } // namespace render::gl

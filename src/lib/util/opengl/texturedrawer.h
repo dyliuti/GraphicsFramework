@@ -11,7 +11,7 @@ public:
     TextureDrawer();
     ~TextureDrawer();
     void drawTexture(GLuint textureId);
-    void setRotateMatrix(const QMatrix4x4& matrix) { m_rotateMatrix = matrix; }
+    void setRotateMatrix(const QMatrix4x4& matrix);
 
 private:
     std::unique_ptr<ShaderProgram> m_program;
