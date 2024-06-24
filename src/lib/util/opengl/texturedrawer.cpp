@@ -1,36 +1,37 @@
 ﻿#include "texturedrawer.h"
+#include "buffer.h"
 #include "shaderprogram.h"
 #include "vertexarrayobject.h"
-#include "buffer.h"
 #include <QDebug>
 #include <QMatrix4x4>
 #include <QMatrix>
 namespace render::gl {
 
-//GLfloat vertices[] = {
-//    // Positions          // Colors           // Texture Coords
-//     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
-//     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
-//    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
-//    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
-//};
+// GLfloat vertices[] = {
+//     // Positions          // Colors           // Texture Coords
+//      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
+//      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
+//     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
+//     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
+// };
 GLfloat vertices[] = {
     // Positions          // Colors           // Texture Coords
-     1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
-     1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
-    -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
-    -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
+    1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top Right
+    1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Bottom Right
+    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Bottom Left
+    -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // Top Left
 };
-GLuint indices[] = {  // Note that we start from 0!
+GLuint indices[] = {
+    // Note that we start from 0!
     0, 1, 3, // First Triangle top right Tri
-    1, 2, 3  // Second Triangle bottom left Tri
+    1, 2, 3 // Second Triangle bottom left Tri
 };
 
 TextureDrawer::TextureDrawer()
     : OpenGLBase()
 {
     m_program = std::make_unique<render::gl::ShaderProgram>();
-    m_program->createProgram(QString("D:/Work/GraphicsFramework/resource/shader/model.vs"), QString("D:/Work/GraphicsFramework/resource/shader/model.frag"));
+    m_program->createProgram(QString(":/common/shader/model.vs"), QString(":/common/shader/model.frag"));
 
     m_vertexArray = std::make_unique<VertexArrayObject>();
     m_vertexArray->bind();
@@ -56,7 +57,6 @@ TextureDrawer::TextureDrawer()
 
 TextureDrawer::~TextureDrawer()
 {
-
 }
 
 void TextureDrawer::drawTexture(GLuint textureId)

@@ -2,6 +2,7 @@ QT += core gui widgets
 TEMPLATE = lib
 DEFINES += UTIL_LIBRARY YMW_LIBRARY
 
+ymw += resource
 CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.

@@ -2,7 +2,7 @@
 MODULE_PRI_INCLUDED = 1
 
 ### define avaliable ymw module list
-avaliable_modules += board qmlplugin widgetbase util
+avaliable_modules += board qmlplugin widgetbase util resource
 
 win32 {
     !contains(QMAKE_TARGET.arch, x86_64) {

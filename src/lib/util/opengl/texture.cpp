@@ -15,19 +15,24 @@ render::gl::Texture::Texture(QString imagePath)
     : OpenGLBase()
 {
     auto image = QImage(imagePath);
+    qInfo() << "111111 texture: " << image.size();
     m_width = image.width();
     m_height = image.height();
     genTexture(image);
 }
 
-render::gl::Texture::Texture(const QImage &image)
-    : OpenGLBase(), m_width(image.width()), m_height(image.height())
+render::gl::Texture::Texture(const QImage& image)
+    : OpenGLBase()
+    , m_width(image.width())
+    , m_height(image.height())
 {
     genTexture(image);
 }
 
-render::gl::Texture::Texture(QImage &&image)
-    : OpenGLBase(), m_width(image.width()), m_height(image.height())
+render::gl::Texture::Texture(QImage&& image)
+    : OpenGLBase()
+    , m_width(image.width())
+    , m_height(image.height())
 {
     genTexture(image);
 }
@@ -37,7 +42,7 @@ render::gl::Texture::~Texture()
     release();
 }
 
-void render::gl::Texture::genTexture(const QImage &image)
+void render::gl::Texture::genTexture(const QImage& image)
 {
     m_gl->glGenTextures(1, &m_textureId);
     m_gl->glBindTexture(GL_TEXTURE_2D, m_textureId);
@@ -53,13 +58,14 @@ void render::gl::Texture::genTexture(const QImage &image)
     qInfo() << "image gl format: " << glFormat << (converted ? convertedImg.size() : image.size());
     auto size = converted ? convertedImg.size() : image.size();
     m_gl->glTexImage2D(GL_TEXTURE_2D, 0, glFormat, size.width(), size.height(), 0, glFormat, GL_UNSIGNED_BYTE, converted ? convertedImg.bits() : image.bits());
-    if(m_mipmapEnable) {
+    if (m_mipmapEnable) {
         m_gl->glGenerateMipmap(GL_TEXTURE_2D);
     }
     m_gl->glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-QImage render::gl::Texture::convertQImageFormatToGL(const QImage &image, GLuint& glFormat, bool& needConvert) {
+QImage render::gl::Texture::convertQImageFormatToGL(const QImage& image, GLuint& glFormat, bool& needConvert)
+{
     switch (image.format()) {
     case QImage::Format_RGB32: // kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Host
     case QImage::Format_RGBA8888: // kCGImageAlphaLast | kCGBitmapByteOrder32Big

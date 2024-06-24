@@ -1,14 +1,13 @@
 ﻿#include "CanvasGLSync.h"
-#include <QDebug>
-#include "opengl/texturedrawer.h"
 #include "opengl/framebufferobject.h"
 #include "opengl/texture.h"
+#include "opengl/texturedrawer.h"
+#include <QDebug>
 
 using namespace render::gl;
 CanvasGLSync::CanvasGLSync(QWidget* parent)
     : QOpenGLWidget(parent)
 {
-
 }
 
 CanvasGLSync::~CanvasGLSync()
@@ -36,11 +35,7 @@ void CanvasGLSync::initializeGL()
 {
     qInfo() << "gl initializeGL: ";
     initializeOpenGLFunctions();
-    QSurfaceFormat format;
-    format.setMajorVersion(3);
-    format.setMinorVersion(3);
-    format.setProfile(QSurfaceFormat::CoreProfile);
-    QOpenGLContext::currentContext()->setFormat(format);
+    context()->setFormat(QSurfaceFormat::defaultFormat());
 
     m_textureDrawer = std::make_unique<render::gl::TextureDrawer>();
 
@@ -73,7 +68,7 @@ void CanvasGLSync::paintGL()
 
 void CanvasGLSync::resizeEvent(QResizeEvent* event)
 {
-    if(m_offscreenFBO) {
+    if (m_offscreenFBO) {
         glViewport(0, 0, width() * devicePixelRatioF(), height() * devicePixelRatioF());
     }
     QWidget::resizeEvent(event);

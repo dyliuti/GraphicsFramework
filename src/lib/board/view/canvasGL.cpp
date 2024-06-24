@@ -1,7 +1,7 @@
 ﻿#include "canvasGL.h"
-#include "opengl/texturedrawer.h"
 #include "opengl/framebufferobject.h"
 #include "opengl/texture.h"
+#include "opengl/texturedrawer.h"
 #include <QDateTime>
 #include <QDebug>
 #include <QMatrix4x4>
@@ -46,13 +46,14 @@ void CanvasGL::syncRunOnRenderThread(std::function<void()> func)
         m_renderThread->syncRunOnRenderThread(func);
     }
 }
-static void cleanImageData(void* data) {
+static void cleanImageData(void* data)
+{
     free(data);
 }
 static int s_rot = 0;
 void CanvasGL::grabImage()
 {
-    syncRunOnRenderThread([&](){
+    syncRunOnRenderThread([&]() {
         auto texture = m_offscreenFBO->texture();
         GLubyte* pixels = (GLubyte*)malloc(texture->width() * texture->height() * sizeof(GLubyte) * 4);
         glReadPixels(0, 0, texture->width(), texture->height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
@@ -99,7 +100,7 @@ void CanvasGL::initializeGL()
     m_renderThread = new RenderThread(this);
     m_renderThread->syncRunOnRenderThread([&]() {
         qInfo() << "111111";
-        auto texture = std::make_shared<render::gl::Texture>("D:/Work/GraphicsFramework/resource/model/facemodel.png");
+        auto texture = std::make_shared<render::gl::Texture>(":/model/model/facemodel.png");
         // auto texture = std::make_shared<render::gl::Texture>(QColor(0, 0, 255), 720, 1280);
         m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
         m_offscreenFBO->bind();
@@ -110,7 +111,7 @@ void CanvasGL::initializeGL()
     setRenderFunction([&]() {
         QMatrix matrix;
         qInfo() << matrix;
-        matrix.rotate((s_rot++)%360);
+        matrix.rotate((s_rot++) % 360);
         qInfo() << matrix;
         QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
         m_textureDrawer->setRotateMatrix(rotateMatrix);
@@ -128,16 +129,15 @@ void CanvasGL::initializeGL()
         //        }
         //        m_inputFrame->pts = ptsInMs - m_lastTime;
         //        render(m_inputFrame, m_outputFrame);
-
     });
+
+    if (!m_timer.isActive()) {
+        m_timer.start(1000 / 30);
+    }
 }
 
 void CanvasGL::paintGL()
 {
-    if (!m_timer.isActive()) {
-        m_timer.start(1000 / 30);
-    }
-
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -152,7 +152,7 @@ void CanvasGL::resizeEvent(QResizeEvent* event)
     QOpenGLWidget::resizeEvent(event);
 }
 
-void CanvasGL::mousePressEvent(QMouseEvent *event)
+void CanvasGL::mousePressEvent(QMouseEvent* event)
 {
     grabImage();
     QOpenGLWidget::mousePressEvent(event);

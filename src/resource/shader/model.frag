@@ -5,7 +5,7 @@ in vec2 TexCoord;
 out vec4 color;
 
 uniform float mixValue;
-
+unifrom mat4 rotateMatrix;
 // Texture samplers
 uniform sampler2D ourTexture1;
 //uniform sampler2D ourTexture2;

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "glutil.h"
-#include <memory>
 #include <QMatrix4x4>
+#include <memory>
 
 namespace render::gl {
 class VertexArrayObject;
@@ -11,7 +11,8 @@ public:
     TextureDrawer();
     ~TextureDrawer();
     void drawTexture(GLuint textureId);
-    void setRotateMatrix(const QMatrix4x4& matrix) {m_rotateMatrix = matrix;}
+    void setRotateMatrix(const QMatrix4x4& matrix) { m_rotateMatrix = matrix; }
+
 private:
     std::unique_ptr<ShaderProgram> m_program;
     std::unique_ptr<render::gl::VertexArrayObject> m_vertexArray;
