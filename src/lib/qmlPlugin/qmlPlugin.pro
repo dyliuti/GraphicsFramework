@@ -16,11 +16,21 @@ win32 {
     FORMS += $$system(for /r $$PWD %i in (*.ui) do @echo %i)
 }
 
+unix {
+    HEADERS += $$system(find $$PWD/sources -name \'*.h\') \
+               $$system(find $$PWD/sources -name \'*.hpp\')
+
+    SOURCES += $$system(find $$PWD/sources -name \'*.c\') \
+               $$system(find $$PWD/sources -name \'*.cpp\') \
+               $$system(find $$PWD/sources -name \'*.mm\')
+}
+
 include(../../../framework.pri)
-include(../../module.pri)
 
 DISTFILES = qmldir
-QML_PLUGIN_OUTPUT_DIR = $$OUTPUT_PWD/qmlPlugin
+
+QML_PLUGIN_OUTPUT_DIR = $$shadowed($$QML_PLUGIN_OUTPUT_DIR)/qmlplugin
+message("1111 $$shadowed($$QML_PLUGIN_OUTPUT_DIR)/qmldir")
 !equals(_PRO_FILE_PWD_, $$QML_PLUGIN_OUTPUT_DIR) {
     copy_qmldir.target = $$QML_PLUGIN_OUTPUT_DIR/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir

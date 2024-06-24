@@ -33,7 +33,7 @@ private:
     GLuint m_textureId = 0;
     int m_width = 0;
     int m_height = 0;
-    GLint m_wrapMode = GL_REPEAT;
+    GLint m_wrapMode = GL_MIRRORED_REPEAT; //GL_REPEAT;
     GLint m_filterMode = GL_LINEAR;
     bool m_mipmapEnable = false;
 };

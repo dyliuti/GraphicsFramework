@@ -6,7 +6,7 @@
 #include <QGraphicsSceneDragDropEvent>
 #include <QDebug>
 
-using namespace Board::Painter;
+BOARD_PAINTER_NAMESPACE_USE
 ResizableRectItem::ResizableRectItem()
 {
     setOwnerItem(this);

@@ -2,7 +2,6 @@
 #define SYSTEMSTATUS_H
 
 #include "util_global.h"
-
 #include <QObject>
 
 class QThread;
@@ -10,7 +9,7 @@ class SystemStatusPrivate;
 class UTIL_EXPORT SystemStatus : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY_MOVE(SystemStatus)
+//    Q_DISABLE_COPY_MOVE(SystemStatus)
 
 public:
     explicit SystemStatus(QObject *parent = 0);

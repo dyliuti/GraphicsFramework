@@ -1,8 +1,6 @@
 # 忽略产生的文件
 # ----------------------------------------------------------------------------
 build-*
-Lesson1/*.vs/*
-*.vs
 Lesson1/Debug/*
 Lesson1/Release/*
 *qrelease*
@@ -34,7 +32,6 @@ Makefile*
 *.app
 moc_*.cpp
 ui_*.h
-qrc_*.cpp
 Thumbs.db
 *.res
 *.rc
@@ -75,5 +72,4 @@ Thumbs.db
 # Binaries
 # --------
 
-*.exe
 

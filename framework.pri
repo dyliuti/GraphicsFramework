@@ -2,8 +2,11 @@ isEmpty(PRO_PWD): PRO_PWD = $$_PRO_FILE_PWD_
 isEmpty(ROOT_PWD): ROOT_PWD = $$PWD
 
 CONFIG += c++17
-
-GENERATEDFILES = $$shadowed($$PRO_PWD)/GeneratedFiles
+CONFIG(debug, debug|release){
+    GENERATEDFILES = $$shadowed($$ROOT_PWD)/qrelease/GeneratedFiles
+}else{
+    GENERATEDFILES = $$shadowed($$ROOT_PWD)/qdebug/GeneratedFiles
+}
 CONFIG(debug, debug|release){
     MOC_DIR = $$GENERATEDFILES/debug
     OBJECTS_DIR = $$GENERATEDFILES/debug
@@ -29,6 +32,7 @@ CONFIG(debug, debug|release){
     OUTPUT_PWD=$$shadowed($$ROOT_PWD)/qrelease
 }
 
+
 message("333333 $$OUT_PWD $$shadowed($$ROOT_PWD)")
 contains(DEFINES, YMW_LIBRARY){
     win32:DESTDIR = $$OUTPUT_PWD
@@ -43,9 +47,9 @@ contains( DEFINES, YMW_PLUGIN ){
 }
 
 contains( DEFINES, QML_PLUGIN ){
-    win32:DESTDIR = $$OUTPUT_PWD/qmlPlugin
-    macx:DESTDIR = "$$OUTPUT_PWD/$$TARGET_BUNDLE_NAME/Contents/Library/qmlPlugin"
-    unix:!macx:DESTDIR = $$OUTPUT_PWD/qmlPlugin
+    win32:DESTDIR = $$OUTPUT_PWD/qmlplugin
+    macx:DESTDIR = "$$OUTPUT_PWD/$$TARGET_BUNDLE_NAME/Contents/Library/qmlplugin"
+    unix:!macx:DESTDIR = $$OUTPUT_PWD/qmlplugin
 }
 
 contains( DEFINES, YMW_APP){

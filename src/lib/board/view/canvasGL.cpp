@@ -110,9 +110,9 @@ void CanvasGL::initializeGL()
 
     setRenderFunction([&]() {
         QMatrix matrix;
-        qInfo() << matrix;
+        //qInfo() << matrix;
         matrix.rotate((s_rot++) % 360);
-        qInfo() << matrix;
+        //qInfo() << matrix;
         QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
         m_textureDrawer->setRotateMatrix(rotateMatrix);
         m_textureDrawer->drawTexture(m_offscreenFBO->textureId());

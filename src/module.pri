@@ -103,3 +103,10 @@ contains(enabled_modules, util){
 
     LIBS += -L$$OUTPUT_PWD/util -lutil
 }
+
+# util
+contains(enabled_modules, resource){
+    INCLUDEPATH *= $$PWD/resource
+
+    LIBS += -L$$OUTPUT_PWD/resource -lresource
+}

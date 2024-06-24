@@ -44,7 +44,7 @@ private:
 
 private:
     Ui::MainWindow* ui;
-    std::shared_ptr<Board::View> m_view;
-    std::shared_ptr<Board::Scene> m_scene;
+    std::shared_ptr<board::View> m_view;
+    std::shared_ptr<board::Scene> m_scene;
 };
 #endif // MAINWINDOW_H

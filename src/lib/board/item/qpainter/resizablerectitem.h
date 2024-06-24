@@ -3,12 +3,11 @@
 
 #include <QGraphicsRectItem>
 #include "resizablehandlerect.h"
-#include "itemtypes.h"
+#include "boarddefine.h"
 #include "board_global.h"
 
-BOARD_NAMESPACE_BEGIN
-PAINTER_NAMESPACE_BEGIN
-class ResizableRectItem : public QGraphicsRectItem, public Painter::ResizableHandleRect
+BOARD_PAINTER_NAMESPACE_BEGIN
+class ResizableRectItem : public QGraphicsRectItem, public ResizableHandleRect
 {
 public:
     explicit ResizableRectItem();
@@ -35,7 +34,6 @@ QDataStream &operator<<(QDataStream &out,
                         const ResizableRectItem & mRect);
 //Read
 QDataStream &operator>>(QDataStream &in, ResizableRectItem & mRectItem);
-PAINTER_NAMESPACE_END
-BOARD_NAMESPACE_END
+BOARD_PAINTER_NAMESPACE_END
 
 #endif // PAINTER_RESIZABLERECTITEM_H

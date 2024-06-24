@@ -4,7 +4,7 @@ TEMPLATE = lib
 DEFINES += WIDGET_LIBRARY YMW_LIBRARY
 TARGET = widgetbase
 CONFIG += c++17  
-ymw += qmlplugin
+#ymw += qmlplugin
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -14,6 +14,15 @@ win32 {
     HEADERS += $$system(for /r $$PWD %i in (*.h,*.hpp) do @echo %i)
     SOURCES += $$system(for /r $$PWD %i in (*.c,*.cpp) do @echo %i)
     FORMS += $$system(for /r $$PWD %i in (*.ui) do @echo %i)
+}
+
+unix {
+    HEADERS += $$system(find $$PWD -name \'*.h\') \
+               $$system(find $$PWD -name \'*.hpp\')
+
+    SOURCES += $$system(find $$PWD -name \'*.c\') \
+               $$system(find $$PWD -name \'*.cpp\') \
+               $$system(find $$PWD -name \'*.mm\')
 }
 
 include(../../../framework.pri)

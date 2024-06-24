@@ -1,8 +1,10 @@
-#ifndef HANDLEITEM_H
-#define HANDLEITEM_H
+#ifndef PAINTER_HANDLEITEM_H
+#define PAINTER_HANDLEITEM_H
 
 #include <QGraphicsRectItem>
+#include "board_global.h"
 
+BOARD_PAINTER_NAMESPACE_BEGIN
 class HandleItem : public QGraphicsRectItem
 {
 public:
@@ -27,5 +29,5 @@ protected:
 private:
     Position handlePosition;
 };
-
+BOARD_PAINTER_NAMESPACE_END
 #endif // HANDLEITEM_H

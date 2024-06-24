@@ -13,30 +13,30 @@
 #endif
 
 #define BOARD_NAMESPACE_BEGIN \
-    namespace Board {
+    namespace board {
 
 #define BOARD_NAMESPACE_END \
     }
 
 #define BOARD_NAMESPACE_USE \
-    using namespace Board;
+    using namespace board;
 
-#define OPENGL_NAMESPACE_BEGIN \
-    namespace Opengl {
+#define BOARD_OPENGL_NAMESPACE_BEGIN \
+    namespace board::opengl {
 
-#define OPENGL_NAMESPACE_END \
+#define BOARD_OPENGL_NAMESPACE_END \
     }
 
-#define OPENGL_NAMESPACE_USE \
-    using namespace Opengl;
+#define BOARD_OPENGL_NAMESPACE_USE \
+    using namespace board::opengl;
 
-#define PAINTER_NAMESPACE_BEGIN \
-    namespace Painter {
+#define BOARD_PAINTER_NAMESPACE_BEGIN \
+    namespace board::painter {
 
-#define PAINTER_NAMESPACE_END \
+#define BOARD_PAINTER_NAMESPACE_END \
     }
 
-#define PAINTER_NAMESPACE_USE \
-    using namespace Painter;
+#define BOARD_PAINTER_NAMESPACE_USE \
+    using namespace board::painter;
 
 #endif // BOARD_GLOBAL_H

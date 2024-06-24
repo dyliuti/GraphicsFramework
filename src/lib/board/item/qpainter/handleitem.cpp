@@ -3,6 +3,7 @@
 
 #include <QGraphicsSceneMouseEvent>
 
+BOARD_PAINTER_NAMESPACE_USE
 HandleItem::HandleItem(Position position) :
     handlePosition(position)
 {

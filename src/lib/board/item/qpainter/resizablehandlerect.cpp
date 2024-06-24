@@ -2,7 +2,7 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-using namespace Board::Painter;
+BOARD_PAINTER_NAMESPACE_USE
 ResizableHandleRect::ResizableHandleRect()
 {
 

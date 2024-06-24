@@ -2,7 +2,7 @@
 #include "fileutil.h"
 
 #include <QCollator>
-#include <QColorSpace>
+//#include <QColorSpace>
 #include <QColor>
 #include <QDir>
 #include <QFileInfo>
@@ -37,60 +37,9 @@ QImage ImageUtil::loadFromFile(const QString& strFilePath, bool convertColorSpac
         //        {
         //            img.setColorSpace(QColorSpace(QColorSpace::AdobeRgb));
         //        }
-        img.setColorSpace(QColorSpace());
+        //img.setColorSpace(QColorSpace());
     }
     return img;
-}
-
-// FM_MAKEUP_CODING QT 美妆导入图片时,剪裁图片
-QImage ImageUtil::clipImageWithEmptyPixel(QImage& src, int padding, QRect& clipRect)
-{
-    int left = src.width();
-    int top = src.height();
-    int right = 0;
-    int bottom = 0;
-
-    for (int i = 0; i < src.width(); i++)
-    {
-        for (int j = 0; j < src.height(); j++)
-        {
-            if (qAlpha(src.pixel(i, j)) > 0)
-            {
-                if (i < left)
-                {
-                    left = i;
-                }
-                if (j < top)
-                {
-                    top = j;
-                }
-                if (i > right)
-                {
-                    right = i;
-                }
-                if (j > bottom)
-                {
-                    bottom = j;
-                }
-            }
-        }
-    }
-
-    left = static_cast<int>(fmax(0, left - padding));
-    top = static_cast<int>(fmax(0, top - padding));
-    right = static_cast<int>(fmin(src.width() - 1, right + padding));
-    bottom = static_cast<int>(fmin(src.height() - 1, bottom + padding));
-
-    if (right < left || bottom < top)
-    {
-        return QImage();
-    }
-    clipRect.setLeft(left);
-    clipRect.setTop(top);
-    clipRect.setRight(right);
-    clipRect.setBottom(bottom);
-
-    return src.copy(left, top, (right - left + 1), (bottom - top + 1));
 }
 
 QSize ImageUtil::getImageSize(const QString& imagePath)

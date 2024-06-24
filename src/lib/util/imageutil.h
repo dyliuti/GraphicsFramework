@@ -19,14 +19,6 @@ public:
     static QImage loadFromFile(const QString& strFilePath, bool convertColorSpaceToRGB = true);
 
     /*
-     * 裁剪图片四周空的部分
-     * src : 源图片
-     * padding : 预留的边界
-     * clipRect : 裁剪后的图片在源图片中的位置
-    */
-    static QImage clipImageWithEmptyPixel(QImage& src, int padding, QRect& clipRect);
-
-    /*
      * 图片大小
      */
     static Q_INVOKABLE QSize getImageSize(const QString& imagePath);

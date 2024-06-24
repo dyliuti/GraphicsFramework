@@ -1,5 +1,6 @@
 ﻿#ifndef BOARD_MOVE_COMMAND_H
 #define BOARD_MOVE_COMMAND_H
+#include <QPointF>
 
 #include "iundoredocommand.h"
 

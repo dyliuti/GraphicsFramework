@@ -7,8 +7,7 @@
 #include "handleitem.h"
 #include "board_global.h"
 
-BOARD_NAMESPACE_BEGIN
-PAINTER_NAMESPACE_BEGIN
+BOARD_PAINTER_NAMESPACE_BEGIN
 class ResizableHandleRect
 {
 public:
@@ -37,7 +36,6 @@ private:
     QGraphicsItem * ownerItem;
 
 };
-PAINTER_NAMESPACE_END
-BOARD_NAMESPACE_END
+BOARD_PAINTER_NAMESPACE_END
 
 #endif // PAINTER_RESIZABLEHANDLERECT_H

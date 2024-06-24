@@ -15,7 +15,9 @@ ShaderProgram::~ShaderProgram()
 bool ShaderProgram::createProgram(const char* vertex_shader, const char* fragment_shader)
 {
     GLuint vertex_shader_id = loadShader(GL_VERTEX_SHADER, vertex_shader);
+    checkShaderCompilation("loadVertexShader", vertex_shader_id);
     GLuint fragment_shader_id = loadShader(GL_FRAGMENT_SHADER, fragment_shader);
+    checkShaderCompilation("loadFragmentShader", fragment_shader_id);
     m_programId = m_gl->glCreateProgram();
     m_gl->glAttachShader(m_programId, vertex_shader_id);
     m_gl->glAttachShader(m_programId, fragment_shader_id);
@@ -90,7 +92,7 @@ GLuint ShaderProgram::loadShader(GLenum type, const char* source)
     GLuint shader = m_gl->glCreateShader(type);
     m_gl->glShaderSource(shader, 1, &source, nullptr);
     m_gl->glCompileShader(shader);
-    checkShaderCompilation("loadShader", shader);
+
     return shader;
 }
 } // namespace render::gl

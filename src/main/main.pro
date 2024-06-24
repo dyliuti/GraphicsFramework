@@ -15,6 +15,17 @@ win32 {
     FORMS += $$system(for /r $$PWD %i in (*.ui) do @echo %i)
 }
 
+unix {
+    HEADERS += $$system(find $$PWD -name \'*.h\') \
+               $$system(find $$PWD -name \'*.hpp\')
+
+    SOURCES += $$system(find $$PWD -name \'*.c\') \
+               $$system(find $$PWD -name \'*.cpp\') \
+               $$system(find $$PWD -name \'*.mm\')
+
+    FORMS += $$system(find $$PWD -name \'*.ui\')
+}
+
 RESOURCES += \
     resource.qrc
 
