@@ -6,7 +6,7 @@
 
 void QmlPlugin::registerTypes(const char *uri)
 {
-    // @uri qmlPlugin
+    // @uri qmlplugin
     qmlRegisterType<MyItem>(uri, 1, 0, "MyItem");
 }
 

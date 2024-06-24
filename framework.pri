@@ -28,7 +28,6 @@ CONFIG(debug, debug|release){
     UI_DIR = $$GENERATEDFILES/release
     RCC_DIR = $$GENERATEDFILES/release
 
-#   D:/Code2/Demo/Plugin/ymwPluginRelease/qrelease
     OUTPUT_PWD=$$shadowed($$ROOT_PWD)/qrelease
 }
 

@@ -7,7 +7,7 @@ DEFINES += QML_PLUGIN
 #TARGET = $$qtLibraryTarget($$TARGET)
 TARGET = qmlPlugin
 TARGET = $$qtLibraryTarget($$TARGET)
-uri = qmlPlugin
+uri = qmlplugin
 
 # Input
 win32 {
@@ -17,12 +17,12 @@ win32 {
 }
 
 unix {
-    HEADERS += $$system(find $$PWD/sources -name \'*.h\') \
-               $$system(find $$PWD/sources -name \'*.hpp\')
+    HEADERS += $$system(find $$PWD -name \'*.h\') \
+               $$system(find $$PWD -name \'*.hpp\')
 
-    SOURCES += $$system(find $$PWD/sources -name \'*.c\') \
-               $$system(find $$PWD/sources -name \'*.cpp\') \
-               $$system(find $$PWD/sources -name \'*.mm\')
+    SOURCES += $$system(find $$PWD -name \'*.c\') \
+               $$system(find $$PWD -name \'*.cpp\') \
+               $$system(find $$PWD -name \'*.mm\')
 }
 
 include(../../../framework.pri)
@@ -30,8 +30,7 @@ include(../../../framework.pri)
 DISTFILES = qmldir \
     test.qml
 
-QML_PLUGIN_OUTPUT_DIR = $$OUTPUT_PWD/qmlPlugin
-message("1111 $$QML_PLUGIN_OUTPUT_DIR")
+QML_PLUGIN_OUTPUT_DIR = $$DESTDIR
 !equals(_PRO_FILE_PWD_, $$QML_PLUGIN_OUTPUT_DIR) {
     copy_qmldir.target = $$QML_PLUGIN_OUTPUT_DIR/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
