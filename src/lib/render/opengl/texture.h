@@ -10,20 +10,13 @@ public:
     Texture(const QImage& image);
     Texture(QImage&& image);
     virtual ~Texture();
+    void destory();
     void setMipmapEnable(bool enable) { m_mipmapEnable = enable; }
     void setWrapMode(GLint wrapMode) { m_wrapMode = wrapMode; }
     void setFilterMode(GLint filterMode) { m_filterMode = filterMode; }
     GLuint textureId() { return m_textureId; }
     int width() { return m_width; }
     int height() { return m_height; }
-
-    void release()
-    {
-        if (m_textureId != 0) {
-            m_gl->glDeleteTextures(1, &m_textureId);
-            m_textureId = 0;
-        }
-    }
 
 protected:
     void genTexture(const QImage& image);
@@ -33,7 +26,7 @@ private:
     GLuint m_textureId = 0;
     int m_width = 0;
     int m_height = 0;
-    GLint m_wrapMode = GL_MIRRORED_REPEAT; // GL_REPEAT;
+    GLint m_wrapMode = GL_CLAMP_TO_BORDER; // GL_REPEAT;
     GLint m_filterMode = GL_LINEAR;
     bool m_mipmapEnable = false;
 };

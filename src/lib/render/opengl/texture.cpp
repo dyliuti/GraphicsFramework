@@ -15,7 +15,6 @@ render::gl::Texture::Texture(QString imagePath)
     : OpenGLBase()
 {
     auto image = QImage(imagePath);
-    qInfo() << "111111 texture: " << image.size();
     m_width = image.width();
     m_height = image.height();
     genTexture(image);
@@ -39,17 +38,31 @@ render::gl::Texture::Texture(QImage&& image)
 
 render::gl::Texture::~Texture()
 {
-    release();
+    destory();
+}
+
+void render::gl::Texture::destory()
+{
+    if (m_textureId != 0) {
+        m_gl->glDeleteTextures(1, &m_textureId);
+        m_textureId = 0;
+    }
 }
 
 void render::gl::Texture::genTexture(const QImage& image)
 {
+    qInfo() << "gen texture size: " << image.size();
     m_gl->glGenTextures(1, &m_textureId);
     m_gl->glBindTexture(GL_TEXTURE_2D, m_textureId);
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filterMode);
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filterMode);
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrapMode);
     m_gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrapMode);
+
+    if (m_wrapMode == GL_CLAMP_TO_BORDER) {
+        float borderColor[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+        m_gl->glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    }
 
     qInfo() << "ori image format: " << image.format();
     GLuint glFormat;

@@ -110,7 +110,7 @@ void CanvasGL::initializeGL()
         m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
         m_offscreenFBO->bind();
         m_offscreenFBO->attachTexture();
-        m_textureDrawer->drawTexture(texture->textureId());
+        m_textureDrawer->drawTexture(texture);
         m_offscreenFBO->release();
     });
 
@@ -147,12 +147,8 @@ void CanvasGL::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDisable(GL_DEPTH);
-    QMatrix matrix;
-    matrix.rotate((s_rot++) % 360);
-    matrix.rotate(30);
-    QMatrix4x4 rotateMatrix = QMatrix4x4(matrix);
-    m_textureDrawer->setRotateMatrix(rotateMatrix);
-    m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
+    m_textureDrawer->setTime(s_rot++ / 360.0); // s_rot++ / 360.0
+    m_textureDrawer->drawTexture(m_offscreenFBO->texture());
 }
 
 void CanvasGL::resizeEvent(QResizeEvent* event)

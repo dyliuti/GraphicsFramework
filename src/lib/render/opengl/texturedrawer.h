@@ -1,22 +1,23 @@
 ﻿#pragma once
 #include "glutil.h"
-#include <QMatrix4x4>
+#include <QMatrix2x2>
 #include <memory>
 
 namespace render::gl {
 class VertexArrayObject;
 class ShaderProgram;
+class Texture;
 class RENDER_EXPORT TextureDrawer : public OpenGLBase {
 public:
     TextureDrawer();
     ~TextureDrawer();
-    void drawTexture(GLuint textureId);
-    void setRotateMatrix(const QMatrix4x4& matrix);
+    void drawTexture(std::shared_ptr<Texture> texture);
+    void setTime(float time);
 
 private:
     std::unique_ptr<ShaderProgram> m_program;
     std::unique_ptr<render::gl::VertexArrayObject> m_vertexArray;
-    QMatrix4x4 m_rotateMatrix;
+    float m_time = 0;
 };
 
 } // namespace render::gl

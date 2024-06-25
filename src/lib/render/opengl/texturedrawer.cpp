@@ -1,6 +1,7 @@
 ﻿#include "texturedrawer.h"
 #include "buffer.h"
 #include "shaderprogram.h"
+#include "texture.h"
 #include "vertexarrayobject.h"
 #include <QDebug>
 #include <QMatrix4x4>
@@ -15,11 +16,11 @@ namespace render::gl {
 //     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
 // };
 GLfloat vertices[] = {
-    // Positions          // Colors           // Texture Coords
-    1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top Right
-    1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Bottom Right
-    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Bottom Left
-    -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // Top Left
+    // Positions// Colors         // Texture Coords
+    1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top Right
+    1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Bottom Right
+    -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Bottom Left
+    -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // Top Left
 };
 GLuint indices[] = {
     // Note that we start from 0!
@@ -43,11 +44,11 @@ TextureDrawer::TextureDrawer()
     vertexBuffer->bind();
     vertexBuffer->write(vertices, sizeof(vertices));
     // Position attribute
-    vertexBuffer->setVertexAttribute(0, 3, 8, 0);
+    vertexBuffer->setVertexAttribute(0, 2, 7, 0);
     // Color attribute
-    vertexBuffer->setVertexAttribute(1, 3, 8, 3);
+    vertexBuffer->setVertexAttribute(1, 3, 7, 2);
     // TexCoord attribute
-    vertexBuffer->setVertexAttribute(2, 2, 8, 6);
+    vertexBuffer->setVertexAttribute(2, 2, 7, 5);
 
     m_vertexArray->appendBuffer(elementBuffer);
     m_vertexArray->appendBuffer(vertexBuffer);
@@ -59,12 +60,13 @@ TextureDrawer::~TextureDrawer()
 {
 }
 
-void TextureDrawer::drawTexture(GLuint textureId)
+void TextureDrawer::drawTexture(std::shared_ptr<Texture> texture)
 {
     // Bind Texture
     m_gl->glActiveTexture(GL_TEXTURE0);
-    m_gl->glBindTexture(GL_TEXTURE_2D, textureId);
+    m_gl->glBindTexture(GL_TEXTURE_2D, texture->textureId());
     m_gl->glUniform1i(m_gl->glGetUniformLocation(m_program->programId(), "ourTexture1"), 0);
+    m_gl->glUniform2f(m_gl->glGetUniformLocation(m_program->programId(), "iSize"), texture->width(), texture->height());
     // Activate shader
     m_program->useProgram();
     // draw model
@@ -73,10 +75,16 @@ void TextureDrawer::drawTexture(GLuint textureId)
     m_vertexArray->release();
 }
 
-void TextureDrawer::setRotateMatrix(const QMatrix4x4& matrix)
+// void TextureDrawer::setRotateMatrix(const QMatrix2x2& matrix)
+//{
+//     m_rotateMatrix = matrix;
+//     m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());
+// }
+
+void TextureDrawer::setTime(float time)
 {
-    m_rotateMatrix = matrix;
-    m_gl->glUniformMatrix4fv(m_gl->glGetUniformLocation(m_program->programId(), "rotateMatrix"), 1, GL_FALSE, m_rotateMatrix.constData());
+    m_time = time;
+    m_gl->glUniform1f(m_gl->glGetUniformLocation(m_program->programId(), "iTime"), m_time);
 }
 
 } // namespace render::gl

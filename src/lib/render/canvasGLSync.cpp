@@ -49,7 +49,7 @@ void CanvasGLSync::initializeGL()
     m_offscreenFBO = std::make_unique<render::gl::FrameBufferObject>(texture);
     m_offscreenFBO->bind();
     m_offscreenFBO->attachTexture();
-    m_textureDrawer->drawTexture(texture->textureId());
+    m_textureDrawer->drawTexture(texture);
     m_offscreenFBO->release();
 }
 
@@ -63,8 +63,8 @@ void CanvasGLSync::paintGL()
     //    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     //    glClear(GL_COLOR_BUFFER_BIT);
 
-    m_textureDrawer->setRotateMatrix(QMatrix4x4());
-    m_textureDrawer->drawTexture(m_offscreenFBO->textureId());
+    m_textureDrawer->setTime(0);
+    m_textureDrawer->drawTexture(m_offscreenFBO->texture());
 
     //    nvgBeginPath(m_vg);
     //    nvgRect(m_vg, 100, 100, 120, 30);
