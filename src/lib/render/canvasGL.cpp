@@ -5,7 +5,6 @@
 #include "opengl/texturedrawer.h"
 #include <QDateTime>
 #include <QDebug>
-#include <QMatrix4x4>
 #include <QStandardPaths>
 #include <QUrl>
 
@@ -15,6 +14,8 @@ CanvasGL::CanvasGL(QWidget* parent)
     : QOpenGLWidget(parent)
 {
     connect(&m_timer, &QTimer::timeout, this, &CanvasGL::onRenderCanvas);
+    m_saveGrapResourceDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/graphics";
+    FileUtil::makePath(m_saveGrapResourceDir);
 }
 
 CanvasGL::~CanvasGL()
@@ -49,6 +50,7 @@ void CanvasGL::syncRunOnRenderThread(std::function<void()> func)
         m_renderThread->syncRunOnRenderThread(func);
     }
 }
+
 static void cleanImageData(void* data)
 {
     free(data);
@@ -60,12 +62,12 @@ void CanvasGL::grabImage()
     runOnRenderThread([&]() {
         auto texture = m_offscreenFBO->texture();
         GLubyte* pixels = (GLubyte*)malloc(texture->width() * texture->height() * sizeof(GLubyte) * 4);
+        m_offscreenFBO->bind();
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0, 0, texture->width(), texture->height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
         QImage image(pixels, texture->width(), texture->height(), QImage::Format_RGBA8888, &cleanImageData);
-        auto docDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/graphics";
-        FileUtil::makePath(docDir);
-        image.save(QString("%1/img%2.png").arg(docDir).arg(s_rot));
+        image.save(QString("%1/img%2.png").arg(m_saveGrapResourceDir).arg(s_rot));
     });
 }
 
@@ -79,7 +81,7 @@ void CanvasGL::onRenderCanvas()
 void CanvasGL::setRenderFunction(std::function<void()> renderFunction)
 {
     m_renderFunction = [this, renderFunc = renderFunction]() {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_offscreenFBO->fboId());
+        m_offscreenFBO->bind();
         renderFunc();
         glFlush();
         QMetaObject::invokeMethod(this, "update");
@@ -115,7 +117,6 @@ void CanvasGL::initializeGL()
     });
 
     setRenderFunction([&]() {
-        s_rot++;
         glEnable(GL_SCISSOR_TEST);
         glScissor(100, 100, 50, 50);
         glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
@@ -147,7 +148,7 @@ void CanvasGL::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDisable(GL_DEPTH);
-    m_textureDrawer->setTime(s_rot++ / 360.0); // s_rot++ / 360.0
+    m_textureDrawer->setTime(s_rot++ / 360.0);
     m_textureDrawer->drawTexture(m_offscreenFBO->texture());
 }
 

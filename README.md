@@ -1,7 +1,7 @@
-# GraphicsFramework
-Graphics View Framework use Opengl、QPainter etc to painter 
-
-新建删除：几何图形、画笔（粗细、颜色、虚实线）、文本（大小、颜色）、橡皮擦
-
-编辑：不编辑状态、选择、移动、旋转、层级、复制、是否可编辑、是否可移动、填充颜色、边框颜色
+# 图片/特效编辑器
+欲编写一个结合AI等图片编辑器（可想像为lightroom+AI）、图片/视频特效编辑器
+AI：MediaPipe
+渲染能力：自已封装的opengl渲染类与复用qt自带的。后续考虑引入metal、vulakn
+编辑器：MVP + 模块化 + 。。。等
+编辑器技术栈：C++、Qt、QML、Opengl、FFMPEG、Python
 

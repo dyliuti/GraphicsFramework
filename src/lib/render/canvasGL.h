@@ -45,6 +45,7 @@ protected:
     QTimer m_timer;
     RenderThread* m_renderThread = nullptr;
     std::function<void()> m_renderFunction;
+    QString m_saveGrapResourceDir;
 
     QString m_texturePath;
     std::unique_ptr<render::gl::FrameBufferObject> m_offscreenFBO;

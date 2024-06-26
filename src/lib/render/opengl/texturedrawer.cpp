@@ -62,13 +62,14 @@ TextureDrawer::~TextureDrawer()
 
 void TextureDrawer::drawTexture(std::shared_ptr<Texture> texture)
 {
+    m_program->useProgram();
     // Bind Texture
     m_gl->glActiveTexture(GL_TEXTURE0);
     m_gl->glBindTexture(GL_TEXTURE_2D, texture->textureId());
     m_gl->glUniform1i(m_gl->glGetUniformLocation(m_program->programId(), "ourTexture1"), 0);
     m_gl->glUniform2f(m_gl->glGetUniformLocation(m_program->programId(), "iSize"), texture->width(), texture->height());
     // Activate shader
-    m_program->useProgram();
+
     // draw model
     m_vertexArray->bind();
     m_gl->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
